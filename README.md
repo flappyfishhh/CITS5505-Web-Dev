@@ -8,7 +8,7 @@ CITS5505 Group Project
 | --- | --- | --- |
 | 23927347 | Nanxi Rao | donkeyrocket |
 | 23740033 | Zhengyuan Zhang |  |
-| 23829237 | Ankita Narvekar |  |
+| 23829237 | Ankita Narvekar | 23829237 |
 | 24112813 | Shuyu Xie |  |
 
 ## Instruction
