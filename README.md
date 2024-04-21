@@ -7,7 +7,7 @@ CITS5505 Group Project
 | UWA ID | Name | Github User Name |
 | --- | --- | --- |
 | 23927347 | Nanxi Rao | donkeyrocket |
-| 23740033 | Zhengyuan Zhang |  |
+| 23740033 | Zhengyuan Zhang | ivyhzyb@gmail.com |
 | 23829237 | Ankita Narvekar | 23829237 |
 | 24112813 | Shuyu Xie |  |
 
