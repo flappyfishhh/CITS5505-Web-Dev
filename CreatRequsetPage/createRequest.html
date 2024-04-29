@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Forum - Create Post</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Create a Post</h1>
+      <form id="postForm">
+        <label for="postTitle">Title:</label>
+        <input
+          type="text"
+          id="postTitle"
+          name="postTitle"
+          required
+        /><br /><br />
+        <label for="postContent">Content:</label><br />
+        <textarea
+          id="postContent"
+          name="postContent"
+          rows="5"
+          cols="50"
+          required
+        ></textarea
+        ><br /><br />
+        <label for="postTag">Tag:</label>
+        <input type="text" id="postTag" name="postTag" required /><br /><br />
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
