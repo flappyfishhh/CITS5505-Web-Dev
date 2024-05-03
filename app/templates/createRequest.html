@@ -4,30 +4,113 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Forum - Create Post</title>
-    <link rel="stylesheet" href="/static/CreateRequestStyles.css" />
+    <style>
+      .container {
+            
+        max-width: 600px;
+        margin: 0 auto;
+        display: rel;
+        background: linear-gradient(rgb(219, 236, 255) 0%, rgb(251, 255, 240)) padding-box,
+                    linear-gradient(145deg, transparent 35%,#e81cff, #40c9ff) border-box;
+        border: 2px solid transparent;
+        padding: 32px 24px;
+        font-size: 14px;
+        font-family: inherit;
+        color: black;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        box-sizing: border-box;
+        border-radius: 16px;
+        align-items: center;
+      }
+      button[type="submit"] {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        align-self: flex-start;
+        font-family: inherit;
+        color: #e9ffd5;
+        font-weight: 600;
+        width: 40%;
+        background: #4d46ff;
+        border: 1px solid #4d46ff;
+        padding: 12px 16px;
+        font-size: inherit;
+        gap: 8px;
+        margin-top: 8px;
+        cursor: pointer;
+        border-radius: 6px;
+        transition: background-color 0.3s, border-color 0.3s;
+      }
+      button[type="submit"]:hover {
+        background-color: #9c91ff;
+        border-color: #fff;
+      }
+      form#postForm {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 80%;
+      }
+      form#postForm label {
+        display: block;
+        margin-bottom: 5px;
+        color: #717171;
+        font-weight: 600;
+        font-size: 12px;
+      }
+      form#postForm input,
+      form#postForm textarea {
+        width: 100%;
+        padding: 12px 16px;
+        border-radius: 8px;
+        font-family: inherit;
+        background-color: transparent;
+        border: 1px solid #414141;
+      }
+      form#postForm textarea {
+        resize: none;
+        height: 96px;
+      }
+      form#postForm input::placeholder,
+      form#postForm textarea::placeholder {
+        opacity: 0.5;
+      }
+      form#postForm input:focus,
+      form#postForm textarea:focus {
+        outline: none;
+        border-color: #e81cff;
+      }
+    </style>
   </head>
   <body>
     <div class="container">
       <h1>Create a Post</h1>
       <form id="postForm">
-        <label for="postTitle">Title:</label>
-        <input
-          type="text"
-          id="postTitle"
-          name="postTitle"
-          required
-        /><br /><br />
-        <label for="postContent">Content:</label><br />
-        <textarea
-          id="postContent"
-          name="postContent"
-          rows="5"
-          cols="50"
-          required
-        ></textarea
-        ><br /><br />
-        <label for="postTag">Tag:</label>
-        <input type="text" id="postTag" name="postTag" required /><br /><br />
+        <div class="form-group">
+          <label for="postTitle">Title:</label>
+          <input
+            type="text"
+            id="postTitle"
+            name="postTitle"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="postContent">Content:</label>
+          <textarea
+            id="postContent"
+            name="postContent"
+            rows="5"
+            cols="50"
+            required
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label for="postTag">Tag:</label>
+          <input type="text" id="postTag" name="postTag" required />
+        </div>
         <button type="submit">Submit</button>
       </form>
     </div>
