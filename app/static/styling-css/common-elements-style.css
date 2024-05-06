@@ -1,0 +1,163 @@
+/* Defining css custom colour properties (variables) within root selector*/
+:root{
+    --main-color:#c8cee6;
+    --elements-color:#4f2194;
+    --base:#685bbc;
+    --border:1rem solid rgba(255, 255, 255, .3);
+    --hover-element:white;
+}
+
+/* Setting common styles for all elements using the universal selector */
+*{
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    outline:none;
+    border:none;
+    text-decoration:none;
+    transition: .2s linear;
+}
+
+/* Header styling */
+.header{
+    background:var(--elements-color);
+    display:flex;
+    align-items: center;
+}
+
+/* App Logo and application name in header styling */
+.header .AppLogo img{
+    padding-left:20px; 
+    padding-top: 10px;
+    height:50px;
+    padding-bottom: 5px;
+}
+
+.application-name {
+    margin-left: 20px; 
+    font-size: 30px;
+    font-weight: bold;
+    color: var(--main-color);
+}
+
+/* Header Icon for user profile options menu */
+.header-icons{
+    color:var(--main-color);
+    cursor:pointer;
+    font-size: 30px;
+    margin-left: 700px;
+}
+
+.header-icons:hover,
+#cancel-button:hover{
+    color: var(--hover-element);
+    font-weight: bold;
+}
+
+/* CSS for all the elements in the navigation menu such as cancel,
+    my profile, logout buttons and user name, user id details 
+ */
+#cancel-button{
+    font-size: 20px;
+    color: var(--main-color); 
+    margin: 10px;
+    text-align: right;
+    float: right;
+}
+
+#profile{
+    font-size: 60px;
+    color: var(--main-color); 
+    text-align: right;
+    float: right;
+    margin-top: 30px;
+}
+
+.profile-content{
+    max-width: 150px;
+    text-align: center;
+    color:var(--main-color);
+    position:relative;
+    margin-top: 40px;
+    display:inline-block;
+    margin-left:15px;
+}
+
+.user-button{
+    display: inline-block;
+}
+
+.profile-buttons{
+    padding:7px;
+    background-color: var(--main-color);
+    color: var(--elements-color);
+    margin-top: 25px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: none;
+    text-align: center;
+    margin-left:15px;
+    text-transform: uppercase;
+}
+
+.profile-buttons:hover,
+.profile-buttons a:hover{
+    background-color: var(--base);
+    color:var(--hover-element);
+}
+
+.profile-buttons a{
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.navigation-menu{
+    display:none;
+    background-color: var(--elements-color);
+    width: 250px;
+    height:180px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    position: fixed;
+    margin-top: 230px;
+}
+
+.header .navigation-menu.active{
+    right:0;
+    display:block;
+}
+
+/* Side navigation bar styling */
+.sidebar {
+    padding: 0;
+    width: 200px;
+    background-color: var(--base);
+    overflow: auto;
+    float:left;
+    height: 100%;
+    position: fixed;
+    border: black;
+}
+  
+.sidebar a {
+    display: block;
+    color: var(--main-color);
+    font-weight: bold;
+    padding: 16px;
+    text-transform: uppercase;
+    font-size: 15px;
+    text-align: center;
+}
+  
+.sidebar a.active {
+    background-color: var(--elements-color);
+    color: var(--hover-element);
+    font-weight:bold;
+}
+  
+.sidebar a:hover:not(.active) {
+    background-color: var(--elements-color);
+    color: var(--hover-element);
+}
