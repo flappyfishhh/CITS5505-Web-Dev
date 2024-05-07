@@ -1,5 +1,8 @@
 from flask import render_template
 from app import app
+from app.model import User
+
+user1 = User(userID = '01',userName = 'aa')
 
 @app.route('/')
 @app.route('/index')
