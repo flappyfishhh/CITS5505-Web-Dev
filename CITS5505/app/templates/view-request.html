@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+    <!-- Linked the styling sheets -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styling-css/common-elements-style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styling-css/view-request.css') }}">
+    <!-- Linked the javascript code file -->
+    <script src="{{ url_for('static', filename='view-request.js')
+    }}"></script>
+    <!-- The view request page displaying the request details and an option to respond to request -->
+    <div class="view-request-content">
+        <div><p><strong>Tag: </strong>#2331</p></div>
+        <div><p><strong>Title: </strong>Looking for a house on rent</p><br>
+            <p class="query-description"><Strong>Description:</Strong></p><br>
+            <p class="description-content">A small paragraph with the description of the query or request posted by user 1.</p>
+        </div>
+        <button class="respond-button" type="button">Respond</button>
+        <!-- The respond to request section displayed on clicking respond button -->
+        <div class="response-content">
+            <!-- The respond to request section has a field to enter response and submit and back buttons -->
+            <textarea id="response" name="response-field"></textarea>
+            <div class="response-buttons">
+                <button class="submit-button" type="button">Submit</button>
+                <button class="back-button" type="button">Back</button>
+            </div>
+        </div>
+    </div>
+    
+
+{% endblock %}
