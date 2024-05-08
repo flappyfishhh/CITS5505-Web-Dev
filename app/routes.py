@@ -1,8 +1,6 @@
-from flask import render_template
+from flask import render_template, redirect, url_for
 from app import app
 from app.model import User
-
-user1 = User(userID = '01',userName = 'aa')
 
 @app.route('/')
 @app.route('/index')
@@ -28,4 +26,11 @@ def ViewRequest():
 @app.route('/create-request')
 def CreateRequest():
     return render_template("create-request.html", title="Create the request")
+
+# submit page to confirm the submitting of new request
+
+@app.route('/submit',methods=['post'])
+def Submit():
+    print('Submitted!')
+    return redirect(location = url_for('ViewRequest'))
 

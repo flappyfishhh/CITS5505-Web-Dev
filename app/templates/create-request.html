@@ -11,7 +11,8 @@
 <!-- The create request page allow user to create post content detail including the title, content and tags -->
 <div class="container">
   <h1>Create a Post</h1>
-  <form id="postForm">
+  <!-- anfter the submit button is clicked, a POST request to the "/submit" URL with the form data -->
+  <form id="postForm" action="/submit" method="post">
     <label for="postTitle">Title:</label>
     <input type="text" id="postTitle" name="postTitle" required /><br /><br />
     <label for="postContent">Content:</label><br />
@@ -25,7 +26,14 @@
     ><br /><br />
     <label for="postTag">Tags:</label>
     <input type="text" id="postTag" name="postTag" required /><br /><br />
-    <button type="submit">Submit</button>
+    <!-- link submit button to the view content page -->
+    <button
+      type="submit"
+      class="btn btn-submit"
+      onclick="location.href='{{ url_for('Submit') }}'"
+    >
+      Submit
+    </button>
   </form>
 </div>
 <!-- Link to js sheet -->
