@@ -11,44 +11,242 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='styling-css/common-elements-style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styling-css/posts.css') }}">
     <script src="{{ url_for('static', filename='common-elements.js') }}"></script>
+
 </head>
 <body>
     <!-- The header section with application theme, logo and user profile options menu -->
-    <div class="header">
-        <!-- Community Logo in the header -->
-        <a href="#" class="AppLogo">
-            <img src="{{ url_for('static',
-            filename='images/AppLogo.jpg') }}" alt="ApplicationLogo">
-        </a> 
-        <!-- The name of application in the header -->
-        <p class="application-name">Local Community Board</p>
-        <!-- The user profile options menu has options to logout and view user profile details -->
-        <nav class="navigation-menu">
-            <div class="fa-solid fa-xmark" id="cancel-button"></div>
-            <div class="profile-content">
-                <h3>User Name</h3>
-                <p>User Id</p> 
+    <div class="page-container">
+        <div id="header-sidebar-container">
+            <div class="header">
+                <!-- Community Logo in the header -->
+                <a href="#" class="AppLogo">
+                    <img src="{{ url_for('static',
+                    filename='images/AppLogo.jpg') }}" alt="ApplicationLogo">
+                </a> 
+                <!-- The name of application in the header -->
+                <p class="application-name">Local Community Board</p>
+                <div class="form">
+                    <label for="search">
+                        <input required="" autocomplete="off" placeholder="search..." id="search" type="text">
+                        <div class="icon">
+                            <svg stroke-width="2" stroke="currentColor" viewBox="0 0 24 24" fill="none" xmlns="http:svg" class="swap-on">
+                                <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linejoin="round" stroke-linecap="round"></path>
+                            </svg>
+                            <svg stroke-width="2" stroke="currentColor" viewBox="0 0 24 24" fill="none" xmlns="http:svg" class="swap-off">
+                                <path d="M10 19l-7-7m0 0l7-7m-7 7h18" stroke-linejoin="round" stroke-linecap="round"></path>
+                            </svg>
+                        </div>
+                        <button type="reset" class="close-btn">
+                            <svg viewBox="0 0 20 20" class="h-5 w-5" xmlns="http:svg">
+                                <path clip-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" fill-rule="evenodd"></path>
+                            </svg>
+                        </button>
+                    </label>
+                </div>
+                
+                <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                  var searchInput = document.getElementById('search');
+                  var searchIcon = document.querySelector('.swap-on');
+                  var closeButton = document.querySelector('.close-btn');
+                
+                  searchIcon.addEventListener('click', function() {
+                      performSearch(searchInput.value);
+                  });
+                
+                  searchInput.addEventListener('input', function(event) {
+                      event.preventDefault();
+                      performSearch(searchInput.value);
+                  });
+                
+                  closeButton.addEventListener('click', function() {
+                      searchInput.value = '';
+                  });
+                
+                  function performSearch(query) {
+                    fetch('/search', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ query: query })
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.text();
+                    })
+                    .then(response => {
+                      document.querySelector(".content-container").innerHTML = response
+                    })
+                    .catch(error => {
+                        console.error('There has been a problem with your fetch operation:', error);
+                    });
+                  }
+                
+                  
+                });
+                </script>
+                
+                <style>
+                
+                
+                .form {
+                  margin-left: 30px;
+                  --input-bg: #FFf;
+                 
+                  --padding: 1.5em;
+                  --rotate: 80deg;
+                 
+                  --gap: 2em;
+                  
+                  --icon-change-color: #15A986;
+                 
+                  --height: 40px;
+                 
+                  width: 200px;
+                  padding-inline-end: 1em;
+                 
+                  background: var(--input-bg);
+                  position: relative;
+                  border-radius: 4px;
+                }
+                
+                .form label {
+                  display: flex;
+                  align-items: center;
+                  width: 100%;
+                  height: var(--height);
+                }
+                
+                .form input {
+                  width: 100% !important;
+                  padding-inline-start: calc(var(--padding) + var(--gap)) !important;
+                  outline: none !important;
+                  background: none;
+                  border: 0 !important;
+                }
+                
+                .form svg {
+                  
+                  color: #111;
+                  transition: 0.3s cubic-bezier(.4,0,.2,1);
+                  position: absolute;
+                  height: 15px;
+                }
+                
+                .icon {
+                  position: absolute;
+                  left: var(--padding);
+                  transition: 0.3s cubic-bezier(.4,0,.2,1);
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                }
+                
+                .swap-off {
+                  transform: rotate(-80deg);
+                  opacity: 0;
+                  visibility: hidden;
+                }
+                
+                .close-btn {
+                  
+                  background: none;
+                  border: none;
+                  right: calc(var(--padding) - var(--gap));
+                  box-sizing: border-box;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  color: #111;
+                  padding: 0.1em;
+                  width: 20px;
+                  height: 20px;
+                  border-radius: 50%;
+                  transition: 0.3s;
+                  opacity: 0;
+                  transform: scale(0);
+                  visibility: hidden;
+                }
+                
+                .form input:focus ~ .icon {
+                  transform: rotate(var(--rotate)) scale(1.3);
+                }
+                
+                .form input:focus ~ .icon .swap-off {
+                  opacity: 1;
+                  transform: rotate(-80deg);
+                  visibility: visible;
+                  color: var(--icon-change-color);
+                }
+                
+                .form input:focus ~ .icon .swap-on {
+                  opacity: 0;
+                  visibility: visible;
+                }
+                
+                .form input:valid ~ .icon {
+                  transform: scale(1.3) rotate(var(--rotate))
+                }
+                
+                .form input:valid ~ .icon .swap-off {
+                  opacity: 1;
+                  visibility: visible;
+                  color: var(--icon-change-color);
+                }
+                
+                .form input:valid ~ .icon .swap-on {
+                  opacity: 0;
+                  visibility: visible;
+                }
+                
+                .form input:valid ~ .close-btn {
+                  opacity: 1;
+                  visibility: visible;
+                  transform: scale(1);
+                  transition: 0s;
+                }
+                
+                </style>
+                <div class="request-card" onclick="window.location.href = '../create-request'">
+                    <div class="button-content">
+                      <span>Request</span>
+                      <span class="hidden-text">Create Request</span>
+                    </div>
+                </div>
+                <link rel="stylesheet" href="../static/styling-css/request-button.css">
+                <nav class="navigation-menu">
+                    <div class="fa-solid fa-xmark" id="cancel-button"></div>
+                    <div class="profile-content">
+                        <h3>User Name</h3>
+                        <p>User Id</p> 
+                    </div>
+                    <div class="fa-solid fa-user-large" id="profile"></div>
+                    <div class="user-button">
+                        <button class="profile-buttons" type="button"><a href="{{ url_for('index') }}">My profile</a></button>
+                        <button class="profile-buttons" type="button"><a href="{{ url_for('index') }}">Log out</a></button>
+                    </div>
+                </nav>
+                <!-- User profile options menu icon in the header -->
+                <div class="header-icons">
+                    <div class="fas fa-bars" id="menu-button"></div>
+                </div>
+                <hr>
             </div>
-            <div class="fa-solid fa-user-large" id="profile"></div>
-            <div class="user-button">
-                <button class="profile-buttons" type="button"><a href="{{ url_for('index') }}">My profile</a></button>
-                <button class="profile-buttons" type="button"><a href="{{ url_for('index') }}">Log out</a></button>
-            </div>
-        </nav>
-        <!-- User profile options menu icon in the header -->
-        <div class="header-icons">
-            <div class="fas fa-bars" id="menu-button"></div>
-        </div>
-        <hr>
-    </div>
 
-    <!-- Side navigation bar to navigate to different pages such as Create Request, View Request and Home page -->
-    <div class="sidebar">
-        <a href="{{ url_for('index') }}" class="active">Home</a>
-        <a href="{{ url_for('CreateRequest') }}">Create Request</a>
-        <a href="{{ url_for('ViewRequest') }}">View Request</a>
-      </div>
-    {% block content %}{% endblock %}
+            <!-- Side navigation bar to navigate to different pages such as Create Request, View Request and Home page -->
+            <div class="sidebar">       
+                
+                <a href="{{ url_for('index') }}" class="active">Home</a>
+                <a href="{{ url_for('CreateRequest') }}">Create Request</a>
+                <a href="{{ url_for('ViewRequest') }}">View Request</a>
+            </div>
+        </div>
+        <div class="content-container">{% block content %}{% endblock %}</div>
+    </div>
 </body>
 </html>
