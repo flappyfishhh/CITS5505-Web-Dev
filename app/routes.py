@@ -33,3 +33,7 @@ def CreateRequest():
 @app.route("/login",methods=['GET'])
 def Login():
     return render_template("login.html",title="User Login")
+
+@app.route("/register",methods=['GET'])
+def Register():
+    return render_template("register.html",title="User Register")
