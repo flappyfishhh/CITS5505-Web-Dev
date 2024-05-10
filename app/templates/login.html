@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        /* 设置整个页面的基本样式 */
+        body {
+            font-family: 'Arial', sans-serif;
+            /* 使用Arial字体，如果不可用则使用sans-serif */
+            margin: 0;
+            /* 移除默认的外边距 */
+            padding: 0;
+            /* 移除默认的内边距 */
+            display: flex;
+            /* 使用flex布局 */
+            justify-content: center;
+            /* 水平居中对齐 */
+            align-items: center;
+            /* 垂直居中对齐 */
+            height: 100vh;
+            /* 设置页面高度为视口高度的100% */
+            /* background: url('../images/bgc.jpg') no-repeat center center fixed; */
+            /* 设置背景图像 */
+            background-size: cover;
+            /* 确保背景图像覆盖整个容器 */
+        }
+
+        /* 登录容器的样式 */
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            /* 设置登录容器的背景颜色和透明度 */
+            border-radius: 8px;
+            /* 为登录容器添加圆角 */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            /* 添加轻微的阴影效果 */
+            padding: 30px;
+            /* 在登录容器内添加30像素的内边距 */
+            width: 300px;
+            /* 设置登录容器的宽度为300像素 */
+            text-align: center;
+            /* 居中对齐文本 */
+        }
+
+        /* 登录容器标题的样式 */
+        .login-container h2 {
+            color: #333;
+            /* 设置标题的文本颜色 */
+            margin-bottom: 20px;
+            /* 在标题下方添加20像素的外边距 */
+        }
+
+        /* 登录表单的样式 */
+        .login-form {
+            margin-top: 20px;
+            /* 在登录表单上方添加20像素的外边距 */
+        }
+
+        /* 表单组的样式 */
+        .form-group {
+            margin-bottom: 20px;
+            /* 在表单组下方添加20像素的外边距 */
+        }
+
+        /* 表单组标签的样式 */
+        .form-group label {
+            font-size: 1.1em;
+            /* 设置标签的字体大小 */
+            display: block;
+            /* 使标签成为块级元素 */
+            margin-bottom: 5px;
+            /* 在标签下方添加5像素的外边距 */
+            color: #555;
+            /* 设置标签的文本颜色 */
+            text-align: left;
+            /* 左对齐文本 */
+        }
+
+        /* 表单组输入字段的样式 */
+        .form-group input {
+            width: 100%;
+            /* 设置输入字段宽度为100% */
+            padding: 10px;
+            /* 在输入字段内添加10像素的内边距 */
+            box-sizing: border-box;
+            /* 盒模型包含内边距和边框 */
+            border: 1px solid #ccc;
+            /* 添加1像素宽的淡灰色边框 */
+            border-radius: 4px;
+            /* 为输入字段添加圆角 */
+        }
+
+        /* 表单组按钮的样式 */
+        .form-group button {
+            width: 100px;
+            /* 设置按钮的宽度为100像素 */
+            background-color: #4caf50;
+            /* 设置按钮的背景颜色 */
+            color: #fff;
+            /* 设置按钮的文本颜色 */
+            padding: 12px 20px;
+            /* 在按钮内添加12像素的内边距 */
+            border: none;
+            /* 移除按钮的边框 */
+            border-radius: 4px;
+            /* 为按钮添加圆角 */
+            cursor: pointer;
+            /* 设置鼠标悬停时的光标样式为手型 */
+            font-size: 16px;
+            /* 设置按钮的字体大小 */
+        }
+
+        /* 鼠标悬停在按钮上的样式 */
+        .form-group button:hover {
+            background-color: #45a049;
+            /* 设置悬停时的背景颜色 */
+        }
+
+        /* 注册链接的样式 */
+        .register-link {
+            display: block;
+            /* 使链接成为块级元素 */
+            color: cornflowerblue;
+            /* 设置链接的文本颜色 */
+            margin-top: 20px;
+            /* 在链接上方添加20像素的外边距 */
+            text-decoration: none;
+            /* 移除链接的下划线 */
+        }
+
+        /* 鼠标悬停在注册链接上的样式 */
+        .register-link:hover {
+            text-decoration: underline;
+            /* 添加下划线效果 */
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-container">
+        <h2>Login</h2>
+        <form class="login-form">
+            <div class="form-group">
+                <label for="username">username: </label>
+                <input type="text" id="username" name="username" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">password: </label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <div class="form-group">
+                <button type="submit">Login</button>
+            </div>
+        </form>
+
+        <a class="register-link" href="./register">Don't have an account? Register one now!</a>
+    </div>
+
+</body>
+
+</html>

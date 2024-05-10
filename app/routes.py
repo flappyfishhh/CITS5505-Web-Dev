@@ -1,5 +1,9 @@
 from flask import render_template
-from app import app
+# from app import app
+from flask import Flask
+app = Flask("__name__",template_folder="./app/templates")
+
+
 
 @app.route('/')
 @app.route('/index')
@@ -26,3 +30,10 @@ def ViewRequest():
 def CreateRequest():
     return render_template("create-request.html", title="Create the request")
 
+@app.route("/login",methods=['GET'])
+def Login():
+    return render_template("login.html",title="User Login")
+
+@app.route("/register",methods=['GET'])
+def Register():
+    return render_template("register.html",title="User Register")
