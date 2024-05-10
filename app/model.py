@@ -7,6 +7,7 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
     request = db.relationship('Request', backref='author', lazy=True)
+    response_contributor = db.relationship('Response', backref='contributor', lazy=True)
 
     #print the user if and user name
     def __repr__(self) -> str:
@@ -23,10 +24,18 @@ class Request(db.Model):
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey(User.user_id), nullable=False)
     tags = db.relationship('Tag', secondary='post_tag', backref='posts', lazy='dynamic')
+    response = db.relationship('Response', backref='response', lazy=True)
 
     #print the request detail
     def __repr__(self) -> str:
         return f'User {self.request_content},{self.date_posted}'
+    
+class Response(db.Model):
+    response_id = db.Column(db.Integer, primary_key = True)
+    response_content = db.Column(db.String(1000))
+    date_responded = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey(User.user_id), nullable=False)
+    request_id = db.Column(db.Integer, db.ForeignKey(Request.request_id), nullable=False)
     
 
 # Many-to-Many association table for requests and tags

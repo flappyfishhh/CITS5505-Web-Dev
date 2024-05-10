@@ -21,6 +21,10 @@ tag1 = Tag(tag_name='Python')
 tag2 = Tag(tag_name='Flask')
 tag3 = Tag(tag_name='SQLAlchemy')
 
+# Create reponses
+response1 = Response(response_content='This is a response to request1',response=request1,contributor = user2)
+response2 = Response(response_content='This is a response to request2',response=request2,contributor = user1)
+
 # Add tags to posts
 request1.tags.append(tag1)
 request1.tags.append(tag2)
@@ -36,6 +40,8 @@ db.session.add(request2)
 db.session.add(tag1)
 db.session.add(tag2)
 db.session.add(tag3)
+db.session.add(response1)
+db.session.add(response2)
 # db.session.commit()
 
 try:
