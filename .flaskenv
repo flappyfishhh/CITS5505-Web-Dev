@@ -1,2 +1,0 @@
-FLASK_APP=communityboard.py
-FLASK_ENV=development
