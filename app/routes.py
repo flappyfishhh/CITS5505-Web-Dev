@@ -161,3 +161,12 @@ def delete_post(post_id):
         db.session.delete(post)
         db.session.commit()
     return redirect(url_for('myProfile'))
+
+# delete response 
+@app.route('/delete_response/<int:response_id>', methods=['POST'])
+def delete_response(response_id):
+    response = Response.query.get_or_404(response_id)
+    if response.contributor.user_id == session['user_id']:
+        db.session.delete(response)
+        db.session.commit()
+    return redirect(url_for('myProfile'))
