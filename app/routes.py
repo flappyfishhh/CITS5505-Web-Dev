@@ -32,8 +32,8 @@ def login():
             return redirect(url_for('index'))
         else:
             # Login failed
-            error='Invalid username or password'
-    return render_template('login.html',error=error)
+            return(render_template('login.html',error='Invalid username or password'))
+    return render_template('login.html')
 
 
 # register page
@@ -44,12 +44,20 @@ def register():
         email = request.form['email']
         password = request.form['password']
 
-        # Create a new user
-        new_user = User(user_name=username, email=email, password=password)
-        db.session.add(new_user)
-        db.session.commit()
+        # Query the user from the database
+        user = User.query.filter_by(email=email).first()
 
-        return redirect(url_for('login'))
+        if(user):
+            # user already exist
+            error = 'User already exist.'
+            return render_template('register.html',error=error)
+        else:
+            # Create a new user
+            new_user = User(user_name=username, email=email, password=password)
+            db.session.add(new_user)
+            db.session.commit()
+
+            return redirect(url_for('login'))
     return render_template('register.html')
 
 #homepage
