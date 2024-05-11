@@ -63,8 +63,10 @@ def register():
 #homepage
 @app.route('/index')
 def index():
+    # Query the top 5 latest posts
+    requests = Request.query.order_by(Request.date_posted.desc()).limit(5).all()
     return render_template("index.html", title="Home", user=user,
-    posts=posts)
+    posts=requests)
 
 
 @app.route('/requests/<int:request_id>')
