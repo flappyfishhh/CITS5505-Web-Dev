@@ -23,7 +23,12 @@
   <h2>My Posts</h2>
   <ul>
     {% for post in posts %}
-    <li>{{ post.request_title }} - {{ post.date_posted }}</li>
+    <li>
+      <a href="{{ url_for('ViewRequest', request_id=post.request_id) }}"
+        >{{ post.request_title }}
+      </a>
+      - {{ post.date_posted }}
+    </li>
     <form
       action="{{ url_for('delete_post', post_id=post.request_id) }}"
       method="post"
@@ -37,7 +42,14 @@
   <ul>
     {% for response in responses %}
     <li>
-      {{ response.response_content }} - {{ response.date_responded }}
+      <p>{{ response.response_content }} - {{ response.date_responded }}</p>
+      <p>
+        For the request:
+        <a
+          href="{{ url_for('ViewRequest', request_id=response.response.request_id) }}"
+          >{{ response.response.request_title }}
+        </a>
+      </p>
       <form
         action="{{ url_for('delete_response', response_id=response.response_id) }}"
         method="post"
