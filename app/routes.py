@@ -152,3 +152,12 @@ def update_user():
     user.user_name = new_username
     db.session.commit()
     return redirect(url_for('myProfile'))
+
+# delete request
+@app.route('/delete_post/<int:post_id>', methods=['POST'])
+def delete_post(post_id):
+    post = Request.query.get_or_404(post_id)
+    if post.author.user_id == session['user_id']:
+        db.session.delete(post)
+        db.session.commit()
+    return redirect(url_for('myProfile'))
