@@ -71,10 +71,22 @@ def index():
     posts=requests)
 
 
-@app.route('/requests/<int:request_id>')
+@app.route('/requests/<int:request_id>', methods=['GET', 'POST'])
 def ViewRequest(request_id):
     new_request = Request.query.get_or_404(request_id)
+    if request.method == 'POST':
+        if 'user_id' in session:
+            response_content = request.form['response']
+            user_id = session['user_id']  
+            new_response = Response(response_content=response_content, user_id=user_id, request_id=request_id)
+            db.session.add(new_response)
+            db.session.commit()
+            return redirect(url_for('ViewRequest', request_id=request_id))
+        else:
+            return render_template('login.html')
     return render_template("view-request.html", request=new_request)
+
+
 
 @app.route('/create-request', methods=['GET', 'POST'])
 def CreateRequest():
