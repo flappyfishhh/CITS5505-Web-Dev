@@ -28,7 +28,7 @@ class Request(db.Model):
 
     #print the request detail
     def __repr__(self) -> str:
-        return f'User {self.request_content},{self.date_posted}'
+        return f'User {self.request_id},{self.date_posted}'
     
 class Response(db.Model):
     response_id = db.Column(db.Integer, primary_key = True)
@@ -36,6 +36,10 @@ class Response(db.Model):
     date_responded = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey(User.user_id), nullable=False)
     request_id = db.Column(db.Integer, db.ForeignKey(Request.request_id), nullable=False)
+
+    #print the response detail
+    def __repr__(self) -> str:
+        return f'Response id: {self.response_id},Request id:{self.request_id}, Response content:{self.response_content}'
     
 
 # Many-to-Many association table for requests and tags

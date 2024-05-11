@@ -1,0 +1,21 @@
+{% extends "base.html" %} {% block content %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='styling-css/search-result.css') }}"
+/>
+<div class="search-result-container">
+  <h1>Search Results</h1>
+  <div id="posts">
+    {% for result in results %}
+    <div class="post">
+      <h2>{{ result.author.user_name }}</h2>
+      <a href="{{ url_for('ViewRequest', request_id=result.request_id) }}"
+        >{{ result.request_title }}</a
+      >
+      <p>{{ result.request_content }}</p>
+    </div>
+    <hr />
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

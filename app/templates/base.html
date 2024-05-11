@@ -27,13 +27,14 @@
         <nav class="navigation-menu">
             <div class="fa-solid fa-xmark" id="cancel-button"></div>
             <div class="profile-content">
-                <h3>User Name</h3>
-                <p>User Id</p> 
+                <h3>{{ g.user.user_name }}</h3>
+                <!-- user id is too personal too display -->
+                <!-- <p>User Id</p>  -->
             </div>
             <div class="fa-solid fa-user-large" id="profile"></div>
             <div class="user-button">
-                <button class="profile-buttons" type="button"><a href="{{ url_for('index') }}">My profile</a></button>
-                <button class="profile-buttons" type="button"><a href="{{ url_for('index') }}">Log out</a></button>
+                <button class="profile-buttons" type="button"><a href="{{ url_for('myProfile') }}">My profile</a></button>
+                <button class="profile-buttons" type="button"><a href="{{ url_for('Logout') }}">Log out</a></button>
             </div>
         </nav>
         <!-- User profile options menu icon in the header -->
@@ -47,7 +48,8 @@
     <div class="sidebar">
         <a href="{{ url_for('index') }}" class="active">Home</a>
         <a href="{{ url_for('CreateRequest') }}">Create Request</a>
-        <a href="{{ url_for('ViewRequest') }}">View Request</a>
+        <!-- View request should only be called when a specific request is specified, for now I have made the request the first request. -->
+        <a href="{{ url_for('ViewRequest',request_id=1) }}">View Request</a>
       </div>
     {% block content %}{% endblock %}
 </body>
