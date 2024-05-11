@@ -32,8 +32,8 @@ def login():
             return redirect(url_for('index'))
         else:
             # Login failed
-            return render_template('login.html', error='Invalid username or password')
-    return render_template('login.html')
+            error='Invalid username or password'
+    return render_template('login.html',error=error)
 
 
 # register page

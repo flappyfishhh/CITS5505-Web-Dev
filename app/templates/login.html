@@ -3,6 +3,9 @@
 
     <div class="login-container">
         <h2>Login</h2>
+        {% if error %}
+        <p style="color: red;">{{ error }}</p>
+        {% endif %}
         <form class="login-form" method="post" action="/login">
             <div class="form-group">
                 <label for="email">email: </label>
