@@ -1,8 +1,9 @@
-from flask import jsonify, render_template, redirect,url_for
-from app import app
+from flask import jsonify, render_template, redirect,url_for, session
+from app import app,db
 from app.model import User,Tag,Request
 from flask import request
 
+app.secret_key = "My Secret key"  
 user = {'username': 'Admin'}
 posts = [
     {
@@ -14,7 +15,8 @@ posts = [
         'body': 'The Avengers movie was so cool!'
     }
 ]
-#Log in
+#Log in page
+@app.route('/')
 @app.route('/login', methods=['GET','POST'])
 def login():
     if request.method == 'POST':
@@ -26,18 +28,33 @@ def login():
 
         if user and password == user.password:
             # Login successful, store the user ID in the session
-            session['user_id'] = user.id
+            session['user_id'] = user.user_id
             return redirect(url_for('index'))
         else:
             # Login failed
             return render_template('login.html', error='Invalid username or password')
     return render_template('login.html')
 
+
+# register page
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form['username']
+        email = request.form['email']
+        password = request.form['password']
+
+        # Create a new user
+        new_user = User(user_name=username, email=email, password=password)
+        db.session.add(new_user)
+        db.session.commit()
+
+        return redirect(url_for('login'))
+    return render_template('register.html')
+
 #homepage
-@app.route('/')
 @app.route('/index')
 def index():
-    
     return render_template("index.html", title="Home", user=user,
     posts=posts)
 
