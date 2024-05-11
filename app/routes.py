@@ -67,19 +67,44 @@ def index():
     posts=posts)
 
 
-@app.route('/view-request')
-def ViewRequest():
-    return render_template("view-request.html", title="View the request")
+@app.route('/requests/<int:request_id>')
+def ViewRequest(request_id):
+    new_request = Request.query.get_or_404(request_id)
+    return render_template("view-request.html", request=new_request)
 
-@app.route('/create-request')
+@app.route('/create-request', methods=['GET', 'POST'])
 def CreateRequest():
-    return render_template("create-request.html", title="Create the request",Request=[])
+    # Only when user has logged in 
+    if 'user_id' in session:
+        if request.method == 'POST':
+            user_id = session['user_id']
+            print(user_id)
+            user = User.query.get(user_id)
+            title = request.form['requestTitle']
+            content = request.form['requestContent']
+            tag_names = [tag.strip() for tag in request.form['tags'].split(',')]
+            tags = []
+            for tag_name in tag_names:
+                tag = Tag.query.filter_by(tag_name=tag_name).first()
+                if not tag:
+                    tag = Tag(tag_name=tag_name.strip())
+                    db.session.add(tag)
+                tags.append(tag)
+            new_request = Request(request_title=title, request_content=content, tags=tags,author=user)
+            new_request.tags.extend(tags)
+            db.session.add(new_request)
+            db.session.commit()
+            return redirect(url_for('ViewRequest',request_id=new_request.request_id))
+        return render_template('create-request.html')
+
+    return render_template(login.html)
+    
 
 # submit page to confirm the submitting of new request
-@app.route('/submit',methods=['post'])
-def Submit():
-    print('Submitted!')
-    return redirect(location = url_for('ViewRequest'))
+# @app.route('/submit',methods=['post'])
+# def Submit():
+#     print('Submitted!')
+#     return redirect(location = url_for('ViewRequest'))
 
 @app.route('/search', methods=['POST'])
 def search():

@@ -28,7 +28,7 @@ class Request(db.Model):
 
     #print the request detail
     def __repr__(self) -> str:
-        return f'User {self.request_content},{self.date_posted}'
+        return f'User {self.request_id},{self.date_posted}'
     
 class Response(db.Model):
     response_id = db.Column(db.Integer, primary_key = True)
