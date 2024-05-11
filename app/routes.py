@@ -14,7 +14,26 @@ posts = [
         'body': 'The Avengers movie was so cool!'
     }
 ]
+#Log in
+@app.route('/login', methods=['GET','POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
 
+        # Query the user from the database
+        user = User.query.filter_by(email=email).first()
+
+        if user and password == user.password:
+            # Login successful, store the user ID in the session
+            session['user_id'] = user.id
+            return redirect(url_for('index'))
+        else:
+            # Login failed
+            return render_template('login.html', error='Invalid username or password')
+    return render_template('login.html')
+
+#homepage
 @app.route('/')
 @app.route('/index')
 def index():
