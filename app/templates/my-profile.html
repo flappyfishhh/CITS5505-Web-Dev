@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styling-css/my-profile.css') }}">
+    <div class="profile-container">
+        <h1>My Profile</h1>
+        <p>Name: {{ user.user_name }}</p>
+        <p>Email: {{ user.email }}</p>
+
+        <h2>My Posts</h2>
+        <ul>
+            {% for post in posts %}
+                <li>{{ post.request_title }} - {{ post.date_posted }}</li>
+            {% endfor %}
+        </ul>
+
+        <h2>My Responses</h2>
+        <ul>
+            {% for response in responses %}
+                <li>{{ response.response_content }} - {{ response.date_responded }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

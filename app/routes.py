@@ -1,6 +1,6 @@
 from flask import jsonify, render_template, redirect,url_for, session
 from app import app,db
-from app.model import User,Tag,Request
+from app.model import User,Tag,Request,Response
 from flask import request
 
 app.secret_key = "My Secret key"  
@@ -105,7 +105,7 @@ def CreateRequest():
             return redirect(url_for('ViewRequest',request_id=new_request.request_id))
         return render_template('create-request.html')
 
-    return render_template(login.html)
+    return render_template('login.html')
     
 
 # submit page to confirm the submitting of new request
@@ -128,3 +128,14 @@ def search_posts(query):
     matching_posts = [post for post in posts if query.lower() in post['body'].lower()]
     return matching_posts
 
+# my profile page
+@app.route('/my-profile')
+def myProfile():
+    # Only when user has logged in 
+    if 'user_id' in session:
+        user_id = session['user_id']
+        user = User.query.get_or_404(user_id)
+        posts = Request.query.filter_by(user_id=user_id).all()
+        responses = Response.query.filter_by(user_id=user_id).all()
+        return render_template('my-profile.html', user=user, posts=posts, responses=responses)
+    return render_template('login.html')
