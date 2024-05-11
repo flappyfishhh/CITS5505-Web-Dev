@@ -1,23 +1,37 @@
-{% extends "base.html" %}
-{% block content %}
-<link rel="stylesheet" href="{{ url_for('static', filename='styling-css/my-profile.css') }}">
-    <div class="profile-container">
-        <h1>My Profile</h1>
-        <p>Name: {{ user.user_name }}</p>
-        <p>Email: {{ user.email }}</p>
+{% extends "base.html" %} {% block content %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='styling-css/my-profile.css') }}"
+/>
+<div class="profile-container">
+  <h1>My Profile</h1>
+  <p>Name: {{ user.user_name }}</p>
+  <!-- allow user to change user name -->
+  <form action="{{ url_for('update_user') }}" method="post">
+    <label for="username">Change User Name:</label>
+    <input
+      type="text"
+      id="username"
+      name="username"
+      value="{{ user.user_name }}"
+      required
+    />
+    <button type="submit">Change</button>
+  </form>
+  <p>Email: {{ user.email }}</p>
 
-        <h2>My Posts</h2>
-        <ul>
-            {% for post in posts %}
-                <li>{{ post.request_title }} - {{ post.date_posted }}</li>
-            {% endfor %}
-        </ul>
+  <h2>My Posts</h2>
+  <ul>
+    {% for post in posts %}
+    <li>{{ post.request_title }} - {{ post.date_posted }}</li>
+    {% endfor %}
+  </ul>
 
-        <h2>My Responses</h2>
-        <ul>
-            {% for response in responses %}
-                <li>{{ response.response_content }} - {{ response.date_responded }}</li>
-            {% endfor %}
-        </ul>
-    </div>
+  <h2>My Responses</h2>
+  <ul>
+    {% for response in responses %}
+    <li>{{ response.response_content }} - {{ response.date_responded }}</li>
+    {% endfor %}
+  </ul>
+</div>
 {% endblock %}

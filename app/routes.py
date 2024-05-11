@@ -143,3 +143,12 @@ def myProfile():
         responses = Response.query.filter_by(user_id=user_id).all()
         return render_template('my-profile.html', user=user, posts=posts, responses=responses)
     return render_template('login.html')
+
+# change user name
+@app.route('/update_user', methods=['POST'])
+def update_user():
+    new_username = request.form['username']
+    user = User.query.get(session['user_id'])
+    user.user_name = new_username
+    db.session.commit()
+    return redirect(url_for('myProfile'))
