@@ -9,14 +9,15 @@
   rel="stylesheet"
   href="{{ url_for('static', filename='styling-css/posts.css') }}"
 />
-<div class="form">
+<form action="{{ url_for('search') }}" method="GET" class="form">
   <label for="search">
     <input
       required=""
       autocomplete="off"
-      placeholder="search..."
+      placeholder="Search..."
       id="search"
       type="text"
+      name="query"
     />
     <div class="icon">
       <svg
@@ -58,7 +59,8 @@
       </svg>
     </button>
   </label>
-</div>
+  <button type="submit">Search</button>
+</form>
 
 <div class="request-card" onclick="window.location.href = '../create-request'">
   <div class="button-content">

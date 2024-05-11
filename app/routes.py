@@ -122,19 +122,15 @@ def CreateRequest():
 #     print('Submitted!')
 #     return redirect(location = url_for('ViewRequest'))
 
-@app.route('/search', methods=['POST'])
+@app.route('/search')
 def search():
-    data = request.get_json()
-    query = data.get('query', '').strip()
-    if query != '':
-        results = search_posts(query)
-        return render_template('search-results.html', posts=results, empty=False)
-    else:
-        return render_template('search-results.html', posts=posts, empty=True)
-
-def search_posts(query):
-    matching_posts = [post for post in posts if query.lower() in post['body'].lower()]
-    return matching_posts
+    query = request.args.get('query')
+    # search by requst title, content and user name
+    results = Request.query.filter(
+        (Request.request_title.contains(query)) | (Request.request_content.contains(query))|
+            (User.user_name.contains(query))
+    ).all()
+    return render_template('search.html', results=results)
 
 # my profile page
 @app.route('/my-profile')
