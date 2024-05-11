@@ -60,6 +60,12 @@ def register():
             return redirect(url_for('login'))
     return render_template('register.html')
 
+# logout
+@app.route('/logout')
+def Logout():
+    session.pop('user_id', None)
+    return redirect(url_for('login'))
+
 #homepage
 @app.route('/index')
 def index():
