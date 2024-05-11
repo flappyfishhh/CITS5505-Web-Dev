@@ -1,20 +1,16 @@
-from flask import jsonify, render_template, redirect,url_for, session
+from flask import jsonify, render_template, redirect,url_for, session, g
 from app import app,db
 from app.model import User,Tag,Request,Response
 from flask import request
 
-app.secret_key = "My Secret key"  
-user = {'username': 'Admin'}
-posts = [
-    {
-        'author': {'username': 'John'},
-        'body': 'Beautiful day in Portland!'
-    },
-    {
-        'author': {'username': 'Susan'},
-        'body': 'The Avengers movie was so cool!'
-    }
-]
+app.secret_key = "My Secret key"
+# pass current user information to base.html
+@app.before_request
+def before_request():
+    g.user = None
+    if 'user_id' in session:
+        g.user = User.query.get(session['user_id'])
+
 #Log in page
 @app.route('/')
 @app.route('/login', methods=['GET','POST'])
@@ -71,7 +67,7 @@ def Logout():
 def index():
     # Query the top 5 latest posts
     requests = Request.query.order_by(Request.date_posted.desc()).limit(5).all()
-    return render_template("index.html", title="Home", user=user,
+    return render_template("index.html", title="Home",
     posts=requests)
 
 
