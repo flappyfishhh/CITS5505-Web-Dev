@@ -2,15 +2,13 @@ from datetime import datetime
 from app import db
 from app.model import *
 
-# user1 = User(user_id = 1,user_name = 'user1', email='test@testmail',password='password')
-
-# tag1 = Tag(tag_id = 1, tag_name='test tag' )
-
-# request1 = Request(request_id = 1, request_title = 'test request',request_content = 'test',date_posted = datetime.now(),user_id = 1)
 
 # Create users
 user1 = User(user_name='john_doe', email='john@example.com',avatar_filename="/static/user-account-image/1.jpg")
+# will change to secure way later
+user1.set_password('password1')
 user2 = User(user_name='jane_smith', email='jane@example.com',avatar_filename="/static/user-account-image/2.jpg")
+user2.set_password('password2')
 
 # Create requests
 request1 = Request(request_title='First Request', request_content='This is the content of the first Request.', author=user1)
