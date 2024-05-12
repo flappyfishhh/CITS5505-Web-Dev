@@ -7,11 +7,12 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
     request = db.relationship('Request', backref='author', lazy=True)
+    avatar_filename = db.Column(db.String(60), nullable=True)
     response_contributor = db.relationship('Response', backref='contributor', lazy=True)
 
     #print the user if and user name
     def __repr__(self) -> str:
-        return f'User {self.user_id},{self.user_name}'
+        return f'User {self.user_id},{self.user_name},{self.avatar_filename }'
 
 class Tag(db.Model):
     tag_id = db.Column(db.Integer, primary_key = True)

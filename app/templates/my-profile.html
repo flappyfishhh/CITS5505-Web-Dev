@@ -5,6 +5,17 @@
 />
 <div class="profile-container">
   <h1>My Profile</h1>
+  <h2>Profile Image</h2>
+  <img src="{{user_image}}" height="50" width="50" alt="User Avatar" />
+  <!-- upload account image -->
+  <form
+    action="{{ url_for('upload_avatar') }}"
+    method="post"
+    enctype="multipart/form-data"
+  >
+    <input type="file" name="file" />
+    <input type="submit" value="Upload" />
+  </form>
   <p>Name: {{ user.user_name }}</p>
   <!-- allow user to change user name -->
   <form action="{{ url_for('update_user') }}" method="post">

@@ -2,6 +2,7 @@ from flask import jsonify, render_template, redirect,url_for, session, g
 from app import app,db
 from app.model import User,Tag,Request,Response
 from flask import request
+import os
 
 app.secret_key = "My Secret key"
 # pass current user information to base.html
@@ -49,7 +50,7 @@ def register():
             return render_template('register.html',error=error)
         else:
             # Create a new user
-            new_user = User(user_name=username, email=email, password=password)
+            new_user = User(user_name=username, email=email, password=password,avatar_filename="/static/user-account-image/default.png")
             db.session.add(new_user)
             db.session.commit()
 
@@ -141,7 +142,11 @@ def myProfile():
         user = User.query.get_or_404(user_id)
         posts = Request.query.filter_by(user_id=user_id).all()
         responses = Response.query.filter_by(user_id=user_id).all()
-        return render_template('my-profile.html', user=user, posts=posts, responses=responses)
+        if(user.avatar_filename):
+            image = "/static/user-account-image/"+user.avatar_filename
+        else:
+            image = "/static/user-account-image/default.png"
+        return render_template('my-profile.html', user=user, posts=posts, responses=responses,user_image=image)
     return render_template('login.html')
 
 # change user name
@@ -168,5 +173,30 @@ def delete_response(response_id):
     response = Response.query.get_or_404(response_id)
     if response.contributor.user_id == session['user_id']:
         db.session.delete(response)
+        db.session.commit()
+    return redirect(url_for('myProfile'))
+
+# allow users to upload image for their account and store in the following folder
+UPLOAD_FOLDER = './app/static/user-account-image'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+@app.route('/upload_avatar', methods=['POST'])
+def upload_avatar():
+    if 'file' not in request.files:
+        print('file not found')
+        # Handle error
+    file = request.files['file']
+    if file.filename == '':
+        print('file not found')
+        # Handle error
+    if file:
+        user_id = str(session['user_id'])
+        filename = user_id+'.jpg'
+        os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+        print('Saving file to:', os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        # Update the user's avatar_filename in the database
+        user = User.query.get(session['user_id'])
+        user.avatar_filename = filename
         db.session.commit()
     return redirect(url_for('myProfile'))
