@@ -9,8 +9,8 @@ from app.model import *
 # request1 = Request(request_id = 1, request_title = 'test request',request_content = 'test',date_posted = datetime.now(),user_id = 1)
 
 # Create users
-user1 = User(user_name='john_doe', email='john@example.com', password='password123')
-user2 = User(user_name='jane_smith', email='jane@example.com', password='password456')
+user1 = User(user_name='john_doe', email='john@example.com')
+user2 = User(user_name='jane_smith', email='jane@example.com')
 
 # Create requests
 request1 = Request(request_title='First Request', request_content='This is the content of the first Request.', author=user1)
