@@ -1,27 +1,45 @@
-{% extends "base.html" %} {% block content %}
-<link rel="stylesheet" href="{{ url_for('static', filename='styling-css/loginAndRegister.css') }}">
-
+{% block content %}
+<!-- Linked the styling sheets -->
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='styling-css/common-elements-style.css') }}"
+/>
+<link 
+  rel="stylesheet" 
+  href="{{ url_for('static', filename='styling-css/loginAndRegister.css') }}"
+/>
+    <div class="login-heading"><h2>Local Community Board</h2>
+    <br>
     <div class="login-container">
         <h2>Login</h2>
-        {% if error %}
-        <p style="color: red;">{{ error }}</p>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
         {% endif %}
+        {% endwith %}
         <form class="login-form" method="post" action="/login">
-            <div class="form-group">
-                <label for="email">email: </label>
-                <input type="text" id="email" name="email" required>
-            </div>
-
-            <div class="form-group">
-                <label for="password">password: </label>
-                <input type="password" id="password" name="password" required>
-            </div>
-
-            <div class="form-group">
-                <button type="submit" value="Login">Login</button>
-            </div>
+            {{ form.hidden_tag() }}
+            {{ form.email.label }}
+            <br>
+            {{ form.email}}
+            <br>
+            {% for error in form.email.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+            <br>
+            {{ form.password.label }}
+            <br>
+            {{ form.password }}
+            {% for error in form.password.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+            <br>
+            {{ form.submit() }}
         </form>
-
         <a class="register-link" href="./register">Don't have an account? Register one now!</a>
     </div>
 

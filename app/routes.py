@@ -1,66 +1,51 @@
-from flask import jsonify, render_template, redirect,url_for, session, g
+from flask import render_template, redirect,url_for, session, flash, request
 from app import app,db
 from app.model import User,Tag,Request,Response
-from flask import request
-import os
+from app.forms import LoginForm, RegistrationForm
+from flask_login import current_user, login_user, login_required, logout_user
+import sqlalchemy as sa
+from urllib.parse import urlsplit
 
-app.secret_key = "My Secret key"
-# pass current user information to base.html
-@app.before_request
-def before_request():
-    g.user = None
-    if 'user_id' in session:
-        g.user = User.query.get(session['user_id'])
 
 #Log in page
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 @app.route('/login', methods=['GET','POST'])
 def login():
-    if request.method == 'POST':
-        email = request.form['email']
-        password = request.form['password']
-
-        # Query the user from the database
-        user = User.query.filter_by(email=email).first()
-
-        if user and password == user.password:
-            # Login successful, store the user ID in the session
-            session['user_id'] = user.user_id
-            return redirect(url_for('index'))
-        else:
-            # Login failed
-            return(render_template('login.html',error='Invalid username or password'))
-    return render_template('login.html')
-
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = db.session.scalar(
+            sa.select(User).where(User.email == form.email.data))
+        if user is None or not user.check_password(form.password.data):
+            flash('Invalid username or password')
+            return redirect(url_for('login'))
+        login_user(user)
+        # next_page = request.args.get('next')
+        # if not next_page or urlsplit(next_page).netloc != '':
+        #     next_page = url_for('index')
+        return redirect(url_for('index'))
+    return render_template('login.html', title='Log In', form=form)
 
 # register page
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    if request.method == 'POST':
-        username = request.form['username']
-        email = request.form['email']
-        password = request.form['password']
-
-        # Query the user from the database
-        user = User.query.filter_by(email=email).first()
-
-        if(user):
-            # user already exist
-            error = 'User already exist.'
-            return render_template('register.html',error=error)
-        else:
-            # Create a new user
-            new_user = User(user_name=username, email=email, password=password,avatar_filename="/static/user-account-image/default.png")
-            db.session.add(new_user)
-            db.session.commit()
-
-            return redirect(url_for('login'))
-    return render_template('register.html')
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(user_name=form.username.data, email=form.email.data)
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        flash('Congratulations, you are now a registered user!')
+        return redirect(url_for('login'))
+    return render_template('register.html', title='Register', form=form)
 
 # logout
 @app.route('/logout')
 def Logout():
-    session.pop('user_id', None)
+    logout_user()
     return redirect(url_for('login'))
 
 #homepage
@@ -68,11 +53,12 @@ def Logout():
 def index():
     # Query the top 5 latest posts
     requests = Request.query.order_by(Request.date_posted.desc()).limit(5).all()
-    return render_template("index.html", title="Home",
+    return render_template("index.html", title="Home", current_user=current_user,
     posts=requests)
 
 
 @app.route('/requests/<int:request_id>', methods=['GET', 'POST'])
+@login_required
 def ViewRequest(request_id):
     new_request = Request.query.get_or_404(request_id)
     if request.method == 'POST':
@@ -90,6 +76,7 @@ def ViewRequest(request_id):
 
 
 @app.route('/create-request', methods=['GET', 'POST'])
+@login_required
 def CreateRequest():
     # Only when user has logged in 
     if 'user_id' in session:
@@ -124,6 +111,7 @@ def CreateRequest():
 #     return redirect(location = url_for('ViewRequest'))
 
 @app.route('/search')
+@login_required
 def search():
     query = request.args.get('query')
     # search by requst title, content and user name
@@ -135,6 +123,7 @@ def search():
 
 # my profile page
 @app.route('/my-profile')
+@login_required
 def myProfile():
     # Only when user has logged in 
     if 'user_id' in session:
@@ -151,6 +140,7 @@ def myProfile():
 
 # change user name
 @app.route('/update_user', methods=['POST'])
+@login_required
 def update_user():
     new_username = request.form['username']
     user = User.query.get(session['user_id'])
@@ -160,6 +150,7 @@ def update_user():
 
 # delete request
 @app.route('/delete_post/<int:post_id>', methods=['POST'])
+@login_required
 def delete_post(post_id):
     post = Request.query.get_or_404(post_id)
     if post.author.user_id == session['user_id']:
@@ -169,6 +160,7 @@ def delete_post(post_id):
 
 # delete response 
 @app.route('/delete_response/<int:response_id>', methods=['POST'])
+@login_required
 def delete_response(response_id):
     response = Response.query.get_or_404(response_id)
     if response.contributor.user_id == session['user_id']:

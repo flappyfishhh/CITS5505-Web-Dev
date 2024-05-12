@@ -36,17 +36,10 @@
       <nav class="navigation-menu">
         <div class="fa-solid fa-xmark" id="cancel-button"></div>
         <div class="profile-content">
-          <h3>{{ g.user.user_name }}</h3>
+          <h3>{{ current_user.user_name }}</h3>
           <!-- user id is too personal too display -->
           <!-- <p>User Id</p>  -->
         </div>
-        <!-- display user image -->
-        <img
-          src="/static/user-account-image/{{g.user.avatar_filename}}"
-          height="50"
-          width="50"
-          alt="User Avatar"
-        />
         <div class="fa-solid fa-user-large" id="profile"></div>
         <div class="user-button">
           <button class="profile-buttons" type="button">
