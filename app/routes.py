@@ -61,9 +61,9 @@ def index():
 def ViewRequest(request_id):
     new_request = Request.query.get_or_404(request_id)
     if request.method == 'POST':
-        if 'user_id' in session:
+        if current_user.is_authenticated:
+            user_id = current_user.user_id
             response_content = request.form['response']
-            user_id = session['user_id']  
             new_response = Response(response_content=response_content, user_id=user_id, request_id=request_id)
             db.session.add(new_response)
             db.session.commit()
@@ -77,10 +77,9 @@ def ViewRequest(request_id):
 @app.route('/create-request', methods=['GET', 'POST'])
 def CreateRequest():
     # Only when user has logged in 
-    if 'user_id' in session:
+    if current_user.is_authenticated:
         if request.method == 'POST':
-            user_id = session['user_id']
-            print(user_id)
+            user_id = current_user.user_id
             user = User.query.get(user_id)
             title = request.form['requestTitle']
             content = request.form['requestContent']
