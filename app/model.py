@@ -15,6 +15,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(128))
     request = db.relationship('Request', backref='author', lazy=True)
+    avatar_filename = db.Column(db.String(60), nullable=True)
     response_contributor = db.relationship('Response', backref='contributor', lazy=True)
 
     #print the user if and user name
@@ -28,7 +29,7 @@ class User(db.Model, UserMixin):
         return check_password_hash(self.password_hash, password)
     
     def get_id(self):
-        return self.email
+        return self.user_id
 
 class Tag(db.Model):
     tag_id = db.Column(db.Integer, primary_key = True)

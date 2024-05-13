@@ -16,6 +16,13 @@
   <div>
     <p><strong>Title: </strong>{{request.request_title}}</p>
     <br />
+    <img
+      src="/static/user-account-image/{{request.author.avatar_filename}}"
+      height="50"
+      width="50"
+      alt="User Avatar"
+    />
+    <p><strong>Author: </strong>{{request.author.user_name}}</p>
     <p class="query-description"><strong>Description:</strong></p>
     <br />
     <p class="description-content">{{request.request_content}}</p>

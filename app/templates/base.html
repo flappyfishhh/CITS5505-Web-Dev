@@ -1,56 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     {% if title %}
     <title>{{ title }} - Local Community Board</title>
     {% else %}
     <title>Local Community Board</title>
     {% endif %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styling-css/common-elements-style.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styling-css/common-elements-style.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
     <script src="{{ url_for('static', filename='common-elements.js') }}"></script>
-</head>
-<body>
+  </head>
+  <body>
     <!-- The header section with application theme, logo and user profile options menu -->
     <div class="header">
-        <!-- Community Logo in the header -->
-        <a href="#" class="AppLogo">
-            <img src="{{ url_for('static',
-            filename='images/AppLogo.jpg') }}" alt="ApplicationLogo">
-        </a> 
-        <!-- The name of application in the header -->
-        <p class="application-name">Local Community Board</p>
-        <!-- The user profile options menu has options to logout and view user profile details -->
-        <nav class="navigation-menu">
-            <div class="fa-solid fa-xmark" id="cancel-button"></div>
-            <div class="profile-content">
-                <h3>{{ current_user.user_name }}</h3>
-                <!-- user id is too personal too display -->
-                <!-- <p>User Id</p>  -->
-            </div>
-            <div class="fa-solid fa-user-large" id="profile"></div>
-            <div class="user-button">
-                <button class="profile-buttons" type="button"><a href="{{ url_for('myProfile') }}">My profile</a></button>
-                <button class="profile-buttons" type="button"><a href="{{ url_for('Logout') }}">Log out</a></button>
-            </div>
-        </nav>
-        <!-- User profile options menu icon in the header -->
-        <div class="header-icons">
-            <div class="fas fa-bars" id="menu-button"></div>
+      <!-- Community Logo in the header -->
+      <a href="#" class="AppLogo">
+        <img
+          src="{{ url_for('static',
+            filename='images/AppLogo.jpg') }}"
+          alt="ApplicationLogo"
+        />
+      </a>
+      <!-- The name of application in the header -->
+      <p class="application-name">Local Community Board</p>
+      <!-- The user profile options menu has options to logout and view user profile details -->
+      <nav class="navigation-menu">
+        <div class="fa-solid fa-xmark" id="cancel-button"></div>
+        <div class="profile-content">
+          <h3>{{ current_user.user_name }}</h3>
+          <!-- user id is too personal too display -->
+          <!-- <p>User Id</p>  -->
+          <img
+            src="/static/user-account-image/{{current_user.avatar_filename}}"
+            height="50"
+            width="50"
+            alt="User Avatar"
+          />
         </div>
-        <hr>
+        <div class="fa-solid fa-user-large" id="profile"></div>
+        <div class="user-button">
+          <button class="profile-buttons" type="button">
+            <a href="{{ url_for('myProfile') }}">My profile</a>
+          </button>
+          <button class="profile-buttons" type="button">
+            <a href="{{ url_for('Logout') }}">Log out</a>
+          </button>
+        </div>
+      </nav>
+      <!-- User profile options menu icon in the header -->
+      <div class="header-icons">
+        <div class="fas fa-bars" id="menu-button"></div>
+      </div>
+      <hr />
     </div>
 
     <!-- Side navigation bar to navigate to different pages such as Create Request, View Request and Home page -->
     <div class="sidebar">
-        <a href="{{ url_for('index') }}" class="active">Home</a>
-        <a href="{{ url_for('CreateRequest') }}">Create Request</a>
-        <!-- View request should only be called when a specific request is specified, for now I have made the request the first request. -->
-        <a href="{{ url_for('ViewRequest',request_id=1) }}">View Request</a>
-      </div>
+      <a href="{{ url_for('index') }}" class="active">Home</a>
+      <a href="{{ url_for('CreateRequest') }}">Create Request</a>
+      <!-- View request should only be called when a specific request is specified, for now I have made the request the first request. -->
+      <a href="{{ url_for('ViewRequest',request_id=1) }}">View Request</a>
+    </div>
     {% block content %}{% endblock %}
-</body>
+  </body>
 </html>
