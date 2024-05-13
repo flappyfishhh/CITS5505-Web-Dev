@@ -29,7 +29,7 @@ class User(db.Model, UserMixin):
         return check_password_hash(self.password_hash, password)
     
     def get_id(self):
-        return self.email
+        return self.user_id
 
 class Tag(db.Model):
     tag_id = db.Column(db.Integer, primary_key = True)

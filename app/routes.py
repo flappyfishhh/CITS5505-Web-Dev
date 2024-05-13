@@ -34,7 +34,7 @@ def register():
         return redirect(url_for('index'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(user_name=form.username.data, email=form.email.data)
+        user = User(user_name=form.username.data, email=form.email.data,avatar_filename = 'default.png')
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
@@ -58,7 +58,6 @@ def index():
 
 
 @app.route('/requests/<int:request_id>', methods=['GET', 'POST'])
-@login_required
 def ViewRequest(request_id):
     new_request = Request.query.get_or_404(request_id)
     if request.method == 'POST':
@@ -70,13 +69,12 @@ def ViewRequest(request_id):
             db.session.commit()
             return redirect(url_for('ViewRequest', request_id=request_id))
         else:
-            return render_template('login.html')
+            return redirect(url_for('login'))
     return render_template("view-request.html", request=new_request)
 
 
 
 @app.route('/create-request', methods=['GET', 'POST'])
-@login_required
 def CreateRequest():
     # Only when user has logged in 
     if 'user_id' in session:
@@ -100,8 +98,7 @@ def CreateRequest():
             db.session.commit()
             return redirect(url_for('ViewRequest',request_id=new_request.request_id))
         return render_template('create-request.html')
-
-    return render_template('login.html')
+    return redirect(url_for('login'))
     
 
 # submit page to confirm the submitting of new request
@@ -111,7 +108,6 @@ def CreateRequest():
 #     return redirect(location = url_for('ViewRequest'))
 
 @app.route('/search')
-@login_required
 def search():
     query = request.args.get('query')
     # search by requst title, content and user name
@@ -123,11 +119,10 @@ def search():
 
 # my profile page
 @app.route('/my-profile')
-@login_required
 def myProfile():
     # Only when user has logged in 
-    if 'user_id' in session:
-        user_id = session['user_id']
+    if current_user.is_authenticated:
+        user_id = current_user.user_id
         user = User.query.get_or_404(user_id)
         posts = Request.query.filter_by(user_id=user_id).all()
         responses = Response.query.filter_by(user_id=user_id).all()
@@ -136,11 +131,10 @@ def myProfile():
         else:
             image = "/static/user-account-image/default.png"
         return render_template('my-profile.html', user=user, posts=posts, responses=responses,user_image=image)
-    return render_template('login.html')
+    return redirect(url_for('login'))
 
 # change user name
 @app.route('/update_user', methods=['POST'])
-@login_required
 def update_user():
     new_username = request.form['username']
     user = User.query.get(session['user_id'])
@@ -150,7 +144,6 @@ def update_user():
 
 # delete request
 @app.route('/delete_post/<int:post_id>', methods=['POST'])
-@login_required
 def delete_post(post_id):
     post = Request.query.get_or_404(post_id)
     if post.author.user_id == session['user_id']:
@@ -160,7 +153,6 @@ def delete_post(post_id):
 
 # delete response 
 @app.route('/delete_response/<int:response_id>', methods=['POST'])
-@login_required
 def delete_response(response_id):
     response = Response.query.get_or_404(response_id)
     if response.contributor.user_id == session['user_id']:

@@ -39,6 +39,12 @@
           <h3>{{ current_user.user_name }}</h3>
           <!-- user id is too personal too display -->
           <!-- <p>User Id</p>  -->
+          <img
+            src="/static/user-account-image/{{current_user.avatar_filename}}"
+            height="50"
+            width="50"
+            alt="User Avatar"
+          />
         </div>
         <div class="fa-solid fa-user-large" id="profile"></div>
         <div class="user-button">

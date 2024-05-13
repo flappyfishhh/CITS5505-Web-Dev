@@ -4,10 +4,10 @@ from app.model import *
 
 
 # Create users
-user1 = User(user_name='john_doe', email='john@example.com',avatar_filename="/static/user-account-image/1.jpg")
+user1 = User(user_name='john_doe', email='john@example.com',avatar_filename="1.jpg")
 # will change to secure way later
 user1.set_password('password1')
-user2 = User(user_name='jane_smith', email='jane@example.com',avatar_filename="/static/user-account-image/2.jpg")
+user2 = User(user_name='jane_smith', email='jane@example.com',avatar_filename="2.jpg")
 user2.set_password('password2')
 
 # Create requests
