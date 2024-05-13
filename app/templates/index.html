@@ -1,4 +1,93 @@
-{% extends "base.html" %}
-{% block content %}
-    <h1>Home Page content will go here</h1>
+{% extends "base.html" %} {% block content %}
+<script src="{{ url_for('static', filename='index.js')
+    }}"></script>
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='styling-css/index-search-box.css') }}"
+/>
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='styling-css/posts.css') }}"
+/>
+<form action="{{ url_for('search') }}" method="GET" class="form">
+  <label for="search">
+    <input
+      required=""
+      autocomplete="off"
+      placeholder="Search..."
+      id="search"
+      type="text"
+      name="query"
+    />
+    <div class="icon">
+      <svg
+        stroke-width="2"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http:svg"
+        class="swap-on"
+      >
+        <path
+          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+          stroke-linejoin="round"
+          stroke-linecap="round"
+        ></path>
+      </svg>
+      <svg
+        stroke-width="2"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http:svg"
+        class="swap-off"
+      >
+        <path
+          d="M10 19l-7-7m0 0l7-7m-7 7h18"
+          stroke-linejoin="round"
+          stroke-linecap="round"
+        ></path>
+      </svg>
+    </div>
+    <button type="reset" class="close-btn">
+      <svg viewBox="0 0 20 20" class="h-5 w-5" xmlns="http:svg">
+        <path
+          clip-rule="evenodd"
+          d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+          fill-rule="evenodd"
+        ></path>
+      </svg>
+    </button>
+  </label>
+  <button type="submit">Search</button>
+</form>
+
+<div class="request-card" onclick="window.location.href = '../create-request'">
+  <div class="button-content">
+    <span>Request</span>
+    <span class="hidden-text">Create Request</span>
+  </div>
+</div>
+<link rel="stylesheet" href="../static/styling-css/request-button.css" />
+<h1>The Posts</h1>
+<div id="posts">
+  {% for post in posts %}
+  <div class="post">
+    <img
+      src="/static/user-account-image/{{post.author.avatar_filename}}"
+      height="50"
+      width="50"
+      alt="User Avatar"
+    />
+    <h2>{{ post.author.user_name }}</h2>
+    <!-- redirect to the view request page when one title is clicked -->
+    <p>
+      <a href="{{ url_for('ViewRequest', request_id=post.request_id) }}"
+        >{{ post.request_title }}</a
+      >
+    </p>
+  </div>
+  <hr />
+  {% endfor %}
+</div>
 {% endblock %}
