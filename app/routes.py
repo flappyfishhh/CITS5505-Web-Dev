@@ -1,8 +1,8 @@
 from flask import render_template, redirect,url_for, session, flash, request
 from app import app,db
 from app.model import User,Tag,Request,Response
-from app.forms import LoginForm, RegistrationForm
-from flask_login import current_user, login_user, login_required, logout_user
+from app.forms import LoginForm, RegistrationForm,CreateRequestForm
+from flask_login import current_user, login_user, logout_user
 import sqlalchemy as sa
 from urllib.parse import urlsplit
 
@@ -21,9 +21,6 @@ def login():
             flash('Invalid username or password')
             return redirect(url_for('login'))
         login_user(user)
-        # next_page = request.args.get('next')
-        # if not next_page or urlsplit(next_page).netloc != '':
-        #     next_page = url_for('index')
         return redirect(url_for('index'))
     return render_template('login.html', title='Log In', form=form)
 
@@ -77,13 +74,14 @@ def ViewRequest(request_id):
 @app.route('/create-request', methods=['GET', 'POST'])
 def CreateRequest():
     # Only when user has logged in 
+    form = CreateRequestForm()
     if current_user.is_authenticated:
         if request.method == 'POST':
             user_id = current_user.user_id
             user = User.query.get(user_id)
-            title = request.form['requestTitle']
-            content = request.form['requestContent']
-            tag_names = [tag.strip() for tag in request.form['tags'].split(',')]
+            title = form.request_title.data
+            content = form.request_content.data
+            tag_names = [tag.strip() for tag in (form.tags.data).split(',')]
             tags = []
             for tag_name in tag_names:
                 tag = Tag.query.filter_by(tag_name=tag_name).first()
@@ -96,7 +94,7 @@ def CreateRequest():
             db.session.add(new_request)
             db.session.commit()
             return redirect(url_for('ViewRequest',request_id=new_request.request_id))
-        return render_template('create-request.html')
+        return render_template('create-request.html',form=form)
     return redirect(url_for('login'))
     
 
