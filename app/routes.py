@@ -5,6 +5,7 @@ from app.forms import LoginForm, RegistrationForm,CreateRequestForm
 from flask_login import current_user, login_user, logout_user
 import sqlalchemy as sa
 from urllib.parse import urlsplit
+import os
 
 
 #Log in page
@@ -134,7 +135,7 @@ def myProfile():
 @app.route('/update_user', methods=['POST'])
 def update_user():
     new_username = request.form['username']
-    user = User.query.get(session['user_id'])
+    user = User.query.get(current_user.user_id)
     user.user_name = new_username
     db.session.commit()
     return redirect(url_for('myProfile'))
@@ -143,7 +144,7 @@ def update_user():
 @app.route('/delete_post/<int:post_id>', methods=['POST'])
 def delete_post(post_id):
     post = Request.query.get_or_404(post_id)
-    if post.author.user_id == session['user_id']:
+    if post.author.user_id == current_user.user_id:
         db.session.delete(post)
         db.session.commit()
     return redirect(url_for('myProfile'))
@@ -152,7 +153,7 @@ def delete_post(post_id):
 @app.route('/delete_response/<int:response_id>', methods=['POST'])
 def delete_response(response_id):
     response = Response.query.get_or_404(response_id)
-    if response.contributor.user_id == session['user_id']:
+    if response.contributor.user_id == current_user.user_id:
         db.session.delete(response)
         db.session.commit()
     return redirect(url_for('myProfile'))
@@ -171,13 +172,13 @@ def upload_avatar():
         print('file not found')
         # Handle error
     if file:
-        user_id = str(session['user_id'])
+        user_id = str(current_user.user_id)
         filename = user_id+'.jpg'
         os.makedirs(UPLOAD_FOLDER, exist_ok=True)
         print('Saving file to:', os.path.join(app.config['UPLOAD_FOLDER'], filename))
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         # Update the user's avatar_filename in the database
-        user = User.query.get(session['user_id'])
+        user = User.query.get(current_user.user_id)
         user.avatar_filename = filename
         db.session.commit()
     return redirect(url_for('myProfile'))
