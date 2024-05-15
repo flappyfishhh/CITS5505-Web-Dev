@@ -14,46 +14,44 @@
 <!-- The view request page displaying the request details and an option to respond to request -->
 <div class="view-request-content">
   <div>
+    <div class="author-details">
+      <div class="author-image"> <img src="/static/user-account-image/{{request.author.avatar_filename}}" alt="User Avatar"/></div>
+      <div class="author-name"><p>{{request.author.user_name}}</p></div>
+    </div>
+    <br/>
     <p><strong>Title: </strong>{{request.request_title}}</p>
-    <br />
-    <img
-      src="/static/user-account-image/{{request.author.avatar_filename}}"
-      height="50"
-      width="50"
-      alt="User Avatar"
-    />
-    <p><strong>Author: </strong>{{request.author.user_name}}</p>
-    <p class="query-description"><strong>Description:</strong></p>
-    <br />
-    <p class="description-content">{{request.request_content}}</p>
-  </div>
-  <p>Tags:</p>
-  <ul>
+    <br/>
+    <div class="description-container">
+      <p class="query-description"><strong>Description:</strong></p>
+      <p class="description-content">{{request.request_content}}</p>
+    </div>
+    <br/>
+    <p><strong>Tags:</strong></p>
     {% for tag in request.tags %}
-    <li>{{ tag.tag_name }}</li>
+      <ul>
+        <li>{{ tag.tag_name }}</li>
+      </ul>
     {% endfor %}
-  </ul>
-  <h3>Responses:</h3>
-  <ul>
-    {% for response in request.response %}
-    <li>From user:{{response.contributor.user_name}}</li>
-    <li>{{ response.response_content }}</li>
-    {% endfor %}
-  </ul>
+    <br/>
+    <h3>Responses:</h3>
+    <ul>
+      {% for response in request.response %}
+        <li>
+          <strong>User:</strong>{{response.contributor.user_name}}
+          <p>{{ response.response_content }}</p>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
   <button class="respond-button" type="button">Respond</button>
   <!-- The respond to request section displayed on clicking respond button -->
-  <div class="response-content" id="responseForm" style="display: none">
+  <div class="response-content" id="responseForm">
     <!-- The respond to request section has a field to enter response and submit and back buttons -->
-    <form
-      action="{{ url_for('ViewRequest', request_id=request.request_id) }}"
-      method="post"
-    >
-      <textarea id="response" name="response" required></textarea>
+    <form action="{{ url_for('ViewRequest', request_id=request.request_id) }}" method="post">
+      <textarea placeholder="Enter your response here..." id="response" name="response" required></textarea>
       <div class="response-buttons">
         <button class="submit-button" type="submit">Submit</button>
-        <button class="back-button" type="button" onclick="hideResponseForm()">
-          Back
-        </button>
+        <button class="back-button" type="button" onclick="hideResponseForm()"> Back </button>
       </div>
     </form>
   </div>
