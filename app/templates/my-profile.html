@@ -1,56 +1,68 @@
 {% extends "base.html" %} {% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link
   rel="stylesheet"
   href="{{ url_for('static', filename='styling-css/my-profile.css') }}"
 />
+<script src="{{ url_for('static', filename='my-profile.js') }}"></script>
 <div class="profile-container">
   <h1>My Profile</h1>
-  <h2>Profile Image</h2>
-  <img src="{{user_image}}" height="50" width="50" alt="User Avatar" />
-  <!-- upload account image -->
-  <form
-    action="{{ url_for('upload_avatar') }}"
-    method="post"
-    enctype="multipart/form-data"
-  >
-    <input type="file" name="file" />
-    <input type="submit" value="Upload" />
-  </form>
-  <p>Name: {{ user.user_name }}</p>
-  <!-- allow user to change user name -->
-  <form action="{{ url_for('update_user') }}" method="post">
-    <label for="username">Change User Name:</label>
-    <input
-      type="text"
-      id="username"
-      name="username"
-      value="{{ user.user_name }}"
-      required
-    />
-    <button type="submit">Change</button>
-  </form>
-  <p>Email: {{ user.email }}</p>
-
-  <h2>My Posts</h2>
-  <ul>
-    {% for post in posts %}
-    <li>
-      <a href="{{ url_for('ViewRequest', request_id=post.request_id) }}"
-        >{{ post.request_title }}
-      </a>
-      - {{ post.date_posted }}
-    </li>
+  <button type="button" class="collapsible">Change Profile Image >></button>
+  <div class='content'>
+    <div class="existing-data">
+      <h2>Current Profile Picture</h2>
+      <img src="{{user_image}}" alt="User Avatar" />
+    </div> 
+    <!-- upload account image -->
     <form
-      action="{{ url_for('delete_post', post_id=post.request_id) }}"
+      action="{{ url_for('upload_avatar') }}"
       method="post"
-    >
-      <button type="submit">Delete</button>
+      enctype="multipart/form-data">
+      <input type="file" name="file" />
+      <input type="submit" value="Upload" />
     </form>
-    {% endfor %}
-  </ul>
-
-  <h2>My Responses</h2>
-  <ul>
+  </div>
+  <!-- allow user to change user name -->
+  <button type="button" class="collapsible">Change User Name >></button>
+  <div class='content'>
+    <p>Name: {{ user.user_name }}</p>
+    <form action="{{ url_for('update_user') }}" method="post">
+      <label for="username">Change User Name:</label>
+      <input
+        type="text"
+        id="username"
+        name="username"
+        value="{{ user.user_name }}"
+        required
+      />
+      <button type="submit">Change</button>
+    </form>
+    <p>Email: {{ user.email }}</p>
+  </div>
+  <button type="button" class="collapsible">View My Posts >></button>
+  <div class="content">
+    <h2>My Posts</h2>
+    <ul>
+      {% for post in posts %}
+      <li>
+        <a href="{{ url_for('ViewRequest', request_id=post.request_id) }}"
+          >{{ post.request_title }}
+        </a>
+        - {{ post.date_posted }}
+      </li>
+      <form
+        action="{{ url_for('delete_post', post_id=post.request_id) }}"
+        method="post"
+      >
+        <button type="submit">Delete</button>
+      </form>
+      {% endfor %}
+    </ul>
+  </div>
+  <button type="button" class="collapsible">View My Responses >></button>
+  <div class="content">
+    <h2>My Responses</h2>
+    <ul>
     {% for response in responses %}
     <li>
       <p>{{ response.response_content }} - {{ response.date_responded }}</p>
@@ -70,5 +82,6 @@
     </li>
     {% endfor %}
   </ul>
+  </div>
 </div>
 {% endblock %}

@@ -36,17 +36,20 @@
       <nav class="navigation-menu">
         <div class="fa-solid fa-xmark" id="cancel-button"></div>
         <div class="profile-content">
-          <h3>{{ current_user.user_name }}</h3>
+          <div><h3>{{ current_user.user_name }}</h3></div>
+          <div><img
+            src="/static/user-account-image/{{current_user.avatar_filename}}"
+            alt="User Avatar"
+            /></div>
+        </div>          
           <!-- user id is too personal too display -->
           <!-- <p>User Id</p>  -->
-          <img
+          <!-- <div></div><img
             src="/static/user-account-image/{{current_user.avatar_filename}}"
-            height="50"
-            width="50"
             alt="User Avatar"
           />
-        </div>
-        <div class="fa-solid fa-user-large" id="profile"></div>
+        </div> -->
+        <!-- <div class="fa-solid fa-user-large" id="profile"></div> -->
         <div class="user-button">
           <button class="profile-buttons" type="button">
             <a href="{{ url_for('myProfile') }}">My profile</a>
