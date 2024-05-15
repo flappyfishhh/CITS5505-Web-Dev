@@ -71,7 +71,6 @@ def ViewRequest(request_id):
     return render_template("view-request.html", request=new_request)
 
 
-
 @app.route('/create-request', methods=['GET', 'POST'])
 def CreateRequest():
     # Only when user has logged in 
@@ -99,19 +98,16 @@ def CreateRequest():
     return redirect(url_for('login'))
     
 
-# submit page to confirm the submitting of new request
-# @app.route('/submit',methods=['post'])
-# def Submit():
-#     print('Submitted!')
-#     return redirect(location = url_for('ViewRequest'))
 
+# Search function. Can search by title, user name and tags.
 @app.route('/search')
 def search():
     query = request.args.get('query')
     # search by requst title, content and user name
-    results = Request.query.filter(
-        (Request.request_title.contains(query)) | (Request.request_content.contains(query))|
-            (User.user_name.contains(query))
+    results = Request.query.join(User).join(Tag, Request.tags).filter(
+        (Request.request_title.contains(query)) |
+        (User.user_name.contains(query)) |
+        (Tag.tag_name.contains(query))
     ).all()
     return render_template('search.html', results=results)
 
