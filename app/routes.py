@@ -145,6 +145,10 @@ def update_user():
 def delete_post(post_id):
     post = Request.query.get_or_404(post_id)
     if post.author.user_id == current_user.user_id:
+        # Delete all the responses first
+        responses = Response.query.filter_by(request_id=post_id).all()
+        for response in responses:
+            db.session.delete(response)
         db.session.delete(post)
         db.session.commit()
     return redirect(url_for('myProfile'))
