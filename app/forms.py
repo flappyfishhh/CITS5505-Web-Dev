@@ -30,3 +30,9 @@ class RegistrationForm(FlaskForm):
             User.email == email.data))
         if user is not None:
             raise ValidationError('Please use a different email address.')
+        
+class CreateRequestForm(FlaskForm):
+    request_title = StringField('Request Title', validators=[DataRequired()])
+    request_content = StringField('Request Content', validators=[DataRequired()])
+    tags = StringField('Tags (comma-separated):')
+    submit = SubmitField('CreatePost')

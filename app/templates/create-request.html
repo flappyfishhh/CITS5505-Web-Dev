@@ -12,28 +12,39 @@
 <div class="container">
   <h1>Create a Post</h1>
   <!-- anfter the submit button is clicked, a POST request to the "/submit" URL with the form data -->
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+  <ul>
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  {% endwith %}
   <form id="postForm" action="/create-request" method="post">
-    <label for="requestTitle">Title:</label>
-    <input type="text" id="requestTitle" name="requestTitle" required /><br /><br />
-    <label for="requestContent">Content:</label><br />
-    <textarea
-      id="requestContent"
-      name="requestContent"
-      rows="5"
-      cols="50"
-      required
-    ></textarea
-    ><br /><br />
-    <label for="tags">Tags (comma-separated):</label>
-    <input type="text" id="tags" name="tags"><br><br>
-    <!-- link submit button to the view content page -->
-    <button
-      type="submit"
-      class="btn btn-submit"
-      value="Submit"
-    >
-      Submit
-    </button>
+    {{ form.hidden_tag() }}
+    <p>
+      {{ form.request_title.label }}<br>
+      {{ form.request_title }}<br>
+      {% for error in form.request_title.errors %}
+      <span>{{ error }}</span>
+      {% endfor %}
+    </p>
+    <p>
+      {{ form.request_content.label }}<br>
+      {{ form.request_content}}<br>
+      {% for error in form.request_content.errors %}
+      <span>{{ error }}</span>
+      {% endfor %}
+    </p>
+    <p>
+      {{ form.tags.label }}<br>
+      {{ form.tags}}<br>
+      {% for error in form.tags.errors %}
+      <span>{{ error }}</span>
+      {% endfor %}
+    </p>
+    <p>{{ form.submit() }}</p>
   </form>
 </div>
 <!-- Link to js sheet -->
