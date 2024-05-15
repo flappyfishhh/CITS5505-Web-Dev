@@ -68,7 +68,7 @@
       <a href="{{ url_for('index') }}" class="active">Home</a>
       <a href="{{ url_for('CreateRequest') }}">Create Request</a>
       <!-- View request should only be called when a specific request is specified, for now I have made the request the first request. -->
-      <a href="{{ url_for('ViewRequest',request_id=1) }}">View Request</a>
+      <!-- <a href="{{ url_for('ViewRequest',request_id=1) }}">View Request</a> -->
     </div>
     {% block content %}{% endblock %}
   </body>
