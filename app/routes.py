@@ -1,10 +1,11 @@
 from flask import render_template, redirect,url_for, session, flash, request
 from app import app,db
 from app.model import User,Tag,Request,Response
-from app.forms import LoginForm, RegistrationForm
-from flask_login import current_user, login_user, login_required, logout_user
+from app.forms import LoginForm, RegistrationForm,CreateRequestForm
+from flask_login import current_user, login_user, logout_user
 import sqlalchemy as sa
 from urllib.parse import urlsplit
+import os
 
 
 #Log in page
@@ -21,9 +22,6 @@ def login():
             flash('Invalid username or password')
             return redirect(url_for('login'))
         login_user(user)
-        # next_page = request.args.get('next')
-        # if not next_page or urlsplit(next_page).netloc != '':
-        #     next_page = url_for('index')
         return redirect(url_for('index'))
     return render_template('login.html', title='Log In', form=form)
 
@@ -77,13 +75,14 @@ def ViewRequest(request_id):
 @app.route('/create-request', methods=['GET', 'POST'])
 def CreateRequest():
     # Only when user has logged in 
+    form = CreateRequestForm()
     if current_user.is_authenticated:
         if request.method == 'POST':
             user_id = current_user.user_id
             user = User.query.get(user_id)
-            title = request.form['requestTitle']
-            content = request.form['requestContent']
-            tag_names = [tag.strip() for tag in request.form['tags'].split(',')]
+            title = form.request_title.data
+            content = form.request_content.data
+            tag_names = [tag.strip() for tag in (form.tags.data).split(',')]
             tags = []
             for tag_name in tag_names:
                 tag = Tag.query.filter_by(tag_name=tag_name).first()
@@ -96,7 +95,7 @@ def CreateRequest():
             db.session.add(new_request)
             db.session.commit()
             return redirect(url_for('ViewRequest',request_id=new_request.request_id))
-        return render_template('create-request.html')
+        return render_template('create-request.html',form=form)
     return redirect(url_for('login'))
     
 
@@ -136,7 +135,7 @@ def myProfile():
 @app.route('/update_user', methods=['POST'])
 def update_user():
     new_username = request.form['username']
-    user = User.query.get(session['user_id'])
+    user = User.query.get(current_user.user_id)
     user.user_name = new_username
     db.session.commit()
     return redirect(url_for('myProfile'))
@@ -145,7 +144,7 @@ def update_user():
 @app.route('/delete_post/<int:post_id>', methods=['POST'])
 def delete_post(post_id):
     post = Request.query.get_or_404(post_id)
-    if post.author.user_id == session['user_id']:
+    if post.author.user_id == current_user.user_id:
         db.session.delete(post)
         db.session.commit()
     return redirect(url_for('myProfile'))
@@ -154,7 +153,7 @@ def delete_post(post_id):
 @app.route('/delete_response/<int:response_id>', methods=['POST'])
 def delete_response(response_id):
     response = Response.query.get_or_404(response_id)
-    if response.contributor.user_id == session['user_id']:
+    if response.contributor.user_id == current_user.user_id:
         db.session.delete(response)
         db.session.commit()
     return redirect(url_for('myProfile'))
@@ -173,13 +172,13 @@ def upload_avatar():
         print('file not found')
         # Handle error
     if file:
-        user_id = str(session['user_id'])
+        user_id = str(current_user.user_id)
         filename = user_id+'.jpg'
         os.makedirs(UPLOAD_FOLDER, exist_ok=True)
         print('Saving file to:', os.path.join(app.config['UPLOAD_FOLDER'], filename))
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         # Update the user's avatar_filename in the database
-        user = User.query.get(session['user_id'])
+        user = User.query.get(current_user.user_id)
         user.avatar_filename = filename
         db.session.commit()
     return redirect(url_for('myProfile'))

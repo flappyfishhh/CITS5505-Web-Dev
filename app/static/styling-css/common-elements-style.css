@@ -25,6 +25,9 @@
     background:var(--elements-color);
     display:flex;
     align-items: center;
+    position: fixed;
+    width: 100%;
+    height:70px;
 }
 
 /* App Logo and application name in header styling */
@@ -93,7 +96,7 @@
     padding:7px;
     background-color: var(--main-color);
     color: var(--elements-color);
-    margin-top: 25px;
+    margin-top: 20px;
     border-radius: 4px;
     cursor: pointer;
     border: none;
@@ -111,6 +114,17 @@
 .profile-buttons a{
     font-size: 15px;
     font-weight: bold;
+}
+
+.profile-content{
+    display:flex;
+    align-items: center;
+}
+
+.profile-content img{
+    height:50px;
+    width:50px;
+    margin-left:35px;
 }
 
 .navigation-menu{
@@ -139,6 +153,7 @@
     height: 100%;
     position: fixed;
     border: black;
+    margin-top: 70px;
 }
   
 .sidebar a {

@@ -1,9 +1,9 @@
 /* CSS for the view request page */
 .view-request-content{
     margin-left:250px;
-    margin-top:20px;
     justify-content: center;
     padding:25px;
+    padding-top:100px;
 }
 
 .response-content{
@@ -40,7 +40,7 @@
 }
 
 .submit-button{
-    margin-left:780px;
+    margin-left:700px;
     margin-right:50px;
 }
 
@@ -52,11 +52,27 @@
 .respond-button:hover,
 .submit-button:hover,
 .back-button:hover{
-    background-color: #4436a0;
+    background-color: var(--elements-color);
     color:white;
 }
 
 /* Styling for the description of the request displayed on view request page */
 .description-content{
     font-size: smaller;
+}
+
+.author-details,
+.description-container{
+    display: flex;
+    align-items: center;
+}
+
+.description-container{
+    align-items: baseline;
+}
+
+.author-image img{
+    height: 50px;
+    width:50px;
+    margin-right: 10px;
 }

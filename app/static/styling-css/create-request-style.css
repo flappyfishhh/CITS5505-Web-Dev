@@ -1,17 +1,14 @@
-/* body {
-  font-family: Arial, sans-serif;
-  background-color: #f9f9f9;
-  margin: 0;
-  padding: 0;
-} */
-
 .container {
   max-width: 800px;
-  margin: 50px auto;
+  margin-left: 300px;
   padding: 20px;
   background-color: #fff;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.home-page{
+  padding-top: 120px;
 }
 
 h1 {
@@ -49,4 +46,22 @@ button {
 
 button:hover {
   background-color: #0056b3;
+}
+
+#postForm p #submit{
+  padding:7px;
+  background-color: var(--base);
+  color: var(--main-color);
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+  text-align: center;
+  margin-top: 20px;
+}
+
+#postForm p #submit:hover{
+  background-color: var(--elements-color);
+  color: white;
+  line-height: 1.1;
+  cursor: pointer;
 }
