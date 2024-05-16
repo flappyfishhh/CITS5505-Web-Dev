@@ -26,4 +26,22 @@ $(document).ready(function () {
     // If response is not empty, allow form submission
     return true;
   });
+
+  //using AJAX for displaying tags
+  $(document).ready(function () {
+    $(".tag-link").click(function (event) {
+      event.preventDefault();
+      var tag = $(this).html().substring(1); // Remove the '#' from the tag name
+      fetch("/tag_requests/" + tag)
+        .then((response) => response.text())
+        .then((data) => {
+          document.open();
+          document.write(data);
+          document.close();
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    });
+  });
 });

@@ -70,6 +70,12 @@ def ViewRequest(request_id):
             return redirect(url_for('login'))
     return render_template("view-request.html", request=new_request)
 
+# display requests having the same tag
+@app.route('/tag_requests/<tag>', methods=['GET'])
+def tag_requests(tag):
+    requests = Request.query.join(Tag, Request.tags).filter(Tag.tag_name.contains(tag)).all()
+    return render_template('tag-requests.html', tag=tag, results=requests)
+
 # create a request with title, content and tags
 @app.route('/create-request', methods=['GET', 'POST'])
 def CreateRequest():

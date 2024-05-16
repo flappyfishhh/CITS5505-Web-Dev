@@ -8,9 +8,11 @@
   rel="stylesheet"
   href="{{ url_for('static', filename='styling-css/view-request.css') }}"
 />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- Linked the javascript code file -->
 <script src="{{ url_for('static', filename='view-request.js')
     }}"></script>
+
 <!-- The view request page displaying the request details and an option to respond to request -->
 <div class="view-request-content">
   <div>
@@ -31,12 +33,17 @@
       <p class="description-content">{{request.request_content}}</p>
     </div>
     <br />
-    <p><strong>Tags:</strong></p>
+    <!-- <p><strong>Tags:</strong></p>
     {% for tag in request.tags %}
     <ul>
-      <li>{{ tag.tag_name }}</li>
+      <li>#{{ tag.tag_name }}</li>
     </ul>
-    {% endfor %}
+    {% endfor %} -->
+    <p>
+      Tags: {% for tag in request.tags %}
+      <a href="#" class="tag-link" data-tag="{{ tag }}">#{{ tag.tag_name }}</a>
+      {% endfor %}
+    </p>
     <br />
     <h3>Responses:</h3>
     <ul>
