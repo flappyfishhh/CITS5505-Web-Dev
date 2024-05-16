@@ -54,7 +54,7 @@ def index():
     return render_template("index.html", title="Home", current_user=current_user,
     posts=requests)
 
-
+# View the request and upload a response
 @app.route('/requests/<int:request_id>', methods=['GET', 'POST'])
 def ViewRequest(request_id):
     new_request = Request.query.get_or_404(request_id)
@@ -70,7 +70,7 @@ def ViewRequest(request_id):
             return redirect(url_for('login'))
     return render_template("view-request.html", request=new_request)
 
-
+# create a request with title, content and tags
 @app.route('/create-request', methods=['GET', 'POST'])
 def CreateRequest():
     # Only when user has logged in 
