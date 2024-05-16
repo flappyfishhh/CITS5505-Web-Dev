@@ -54,7 +54,7 @@ def index():
     return render_template("index.html", title="Home", current_user=current_user,
     posts=requests)
 
-
+# View the request and upload a response
 @app.route('/requests/<int:request_id>', methods=['GET', 'POST'])
 def ViewRequest(request_id):
     new_request = Request.query.get_or_404(request_id)
@@ -70,8 +70,13 @@ def ViewRequest(request_id):
             return redirect(url_for('login'))
     return render_template("view-request.html", request=new_request)
 
+# display requests having the same tag
+@app.route('/tag_requests/<tag>', methods=['GET'])
+def tag_requests(tag):
+    requests = Request.query.join(Tag, Request.tags).filter(Tag.tag_name.contains(tag)).all()
+    return render_template('tag-requests.html', tag=tag, results=requests)
 
-
+# create a request with title, content and tags
 @app.route('/create-request', methods=['GET', 'POST'])
 def CreateRequest():
     # Only when user has logged in 
@@ -99,19 +104,16 @@ def CreateRequest():
     return redirect(url_for('login'))
     
 
-# submit page to confirm the submitting of new request
-# @app.route('/submit',methods=['post'])
-# def Submit():
-#     print('Submitted!')
-#     return redirect(location = url_for('ViewRequest'))
 
+# Search function. Can search by title, user name and tags.
 @app.route('/search')
 def search():
     query = request.args.get('query')
     # search by requst title, content and user name
-    results = Request.query.filter(
-        (Request.request_title.contains(query)) | (Request.request_content.contains(query))|
-            (User.user_name.contains(query))
+    results = Request.query.join(User).join(Tag, Request.tags).filter(
+        (Request.request_title.contains(query)) |
+        (User.user_name.contains(query)) |
+        (Tag.tag_name.contains(query))
     ).all()
     return render_template('search.html', results=results)
 
@@ -145,6 +147,10 @@ def update_user():
 def delete_post(post_id):
     post = Request.query.get_or_404(post_id)
     if post.author.user_id == current_user.user_id:
+        # Delete all the responses first
+        responses = Response.query.filter_by(request_id=post_id).all()
+        for response in responses:
+            db.session.delete(response)
         db.session.delete(post)
         db.session.commit()
     return redirect(url_for('myProfile'))

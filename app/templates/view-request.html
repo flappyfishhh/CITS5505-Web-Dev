@@ -8,38 +8,50 @@
   rel="stylesheet"
   href="{{ url_for('static', filename='styling-css/view-request.css') }}"
 />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- Linked the javascript code file -->
 <script src="{{ url_for('static', filename='view-request.js')
     }}"></script>
+
 <!-- The view request page displaying the request details and an option to respond to request -->
 <div class="view-request-content">
   <div>
     <div class="author-details">
-      <div class="author-image"> <img src="/static/user-account-image/{{request.author.avatar_filename}}" alt="User Avatar"/></div>
+      <div class="author-image">
+        <img
+          src="/static/user-account-image/{{request.author.avatar_filename}}"
+          alt="User Avatar"
+        />
+      </div>
       <div class="author-name"><p>{{request.author.user_name}}</p></div>
     </div>
-    <br/>
+    <br />
     <p><strong>Title: </strong>{{request.request_title}}</p>
-    <br/>
+    <br />
     <div class="description-container">
       <p class="query-description"><strong>Description:</strong></p>
       <p class="description-content">{{request.request_content}}</p>
     </div>
-    <br/>
-    <p><strong>Tags:</strong></p>
+    <br />
+    <!-- <p><strong>Tags:</strong></p>
     {% for tag in request.tags %}
-      <ul>
-        <li>{{ tag.tag_name }}</li>
-      </ul>
-    {% endfor %}
-    <br/>
+    <ul>
+      <li>#{{ tag.tag_name }}</li>
+    </ul>
+    {% endfor %} -->
+    <p>
+      Tags: {% for tag in request.tags %}
+      <a href="#" class="tag-link" data-tag="{{ tag }}">#{{ tag.tag_name }}</a>
+      {% endfor %}
+    </p>
+    <br />
     <h3>Responses:</h3>
     <ul>
       {% for response in request.response %}
-        <li>
-          <strong>User:</strong>{{response.contributor.user_name}}
-          <p>{{ response.response_content }}</p>
-        </li>
+      <li>
+        <strong>User:</strong>{{response.contributor.user_name}}
+        <p>{{ response.response_content }}</p>
+      </li>
       {% endfor %}
     </ul>
   </div>
@@ -47,11 +59,21 @@
   <!-- The respond to request section displayed on clicking respond button -->
   <div class="response-content" id="responseForm">
     <!-- The respond to request section has a field to enter response and submit and back buttons -->
-    <form action="{{ url_for('ViewRequest', request_id=request.request_id) }}" method="post">
-      <textarea placeholder="Enter your response here..." id="response" name="response" required></textarea>
+    <form
+      action="{{ url_for('ViewRequest', request_id=request.request_id) }}"
+      method="post"
+    >
+      <textarea
+        placeholder="Enter your response here..."
+        id="response"
+        name="response"
+        required
+      ></textarea>
       <div class="response-buttons">
         <button class="submit-button" type="submit">Submit</button>
-        <button class="back-button" type="button" onclick="hideResponseForm()"> Back </button>
+        <button class="back-button" type="button" onclick="hideResponseForm()">
+          Back
+        </button>
       </div>
     </form>
   </div>
