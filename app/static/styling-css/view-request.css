@@ -26,7 +26,19 @@
 }
 
 /* Styling for all the buttons on view request and respond request pages */
-.respond-button,
+.respond-button{
+    padding:7px;
+    background-color: var(--base);
+    color: var(--main-color);
+    margin-top: 15px;
+    margin-bottom: 50px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: none;
+    text-align: center;
+}
+
+
 .submit-button,
 .back-button{
     padding:7px;
@@ -105,4 +117,41 @@
     color: white;
     line-height: 1.1;
     cursor: pointer;
+}
+
+#Problem_Description {
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border: 1px;
+}
+
+.Responses {
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border: 1px;
+    margin-top: 5px;
+}
+.Responses > p {
+    margin-top: 10px;
+    border-top: 2px solid #685BBC;
+    padding-top: 5px;
+}
+
+
+ul {
+    list-style: none;
+}
+
+.tag-link {
+    text-decoration: none;
+    color: #25507B;
+    background-color: #EDF5FD;
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 4px;
+}
+.author-details {
+    border-bottom: 5px solid #685BBC;
 }

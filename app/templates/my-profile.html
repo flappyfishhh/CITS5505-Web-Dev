@@ -32,20 +32,9 @@
   <div class="content">
     <h2>Change Password</h2>
 
-
-
-
-
     <form action="{{ url_for('update_password') }}" method="post" enctype="multipart/form-data">
-      {% with messages =  get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-          {% for category, message in messages %}
-            <div class="alert alert-{{ category }}">
-              {{ message }}
-            </div>
-          {% endfor %}
-        {% endif %}
-      {% endwith %}
+      <div class="changePassword_msg">
+      </div>
       <div class="CPass_input">
         <label for="username">Current Password:</label>
         <input type="password" id="password_old" name="password_old" value="" required />
@@ -61,15 +50,6 @@
       </div>
   </div>
   <button type="button" class="collapsible">View My Posts >></button>
-
-
-
-
-
-
-
-
-
   </form>
   <div class="content">
     <h2>My Posts</h2>
@@ -117,13 +97,46 @@
   });
 
   document.getElementById('changeButton').addEventListener('click', function (event) {
+    var password0 = document.getElementById('password_old').value;
     var password1 = document.getElementById('password_new').value;
     var password2 = document.getElementById('password_new_repeat').value;
-
     if (password1 !== password2) {
       alert('The new password entered is inconsistent.');
-      event.preventDefault(); // Prevent form submission
     }
+    var data = {
+      "password_old": password0,
+      "password_new": password2
+    }
+
+    
+
+
+    $.ajax({
+      type: "POST",
+      url: "/update_password",
+      data: JSON.stringify(data),
+      contentType: "application/json",
+      success: function(response) {
+            // console.log(response.code)
+            if (response.code==0){
+              $(".changePassword_msg").text("Password changed!")
+              $(".changePassword_msg").css("color","green")
+            }else{
+              $(".changePassword_msg").text("Incorrect password!")
+              $(".changePassword_msg").css("color","red")
+            }
+        },
+        error: function(xhr, status, error) {
+            
+            alert("Network Error")
+        }
+    })
+
+
+
+
+    
+    event.preventDefault(); // Prevent form submission
   });
 
 

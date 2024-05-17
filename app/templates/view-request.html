@@ -15,7 +15,7 @@
 
 <!-- The view request page displaying the request details and an option to respond to request -->
 <div class="view-request-content">
-  <div>
+  <div id="Problem_Description">
     <div class="author-details">
       <div class="author-image">
         <img
@@ -41,42 +41,45 @@
     {% endfor %} -->
     <p>
       Tags: {% for tag in request.tags %}
-      <a href="#" class="tag-link" data-tag="{{ tag }}">#{{ tag.tag_name }}</a>
+      <a href="#" class="tag-link" data-tag="{{ tag }}">{{ tag.tag_name }}</a>
       {% endfor %}
     </p>
     <br />
-    <h3>Responses:</h3>
-    <ul>
-      {% for response in request.response %}
-      <li>
-        <strong>User:</strong>{{response.contributor.user_name}}
-        <p>{{ response.response_content }}</p>
-      </li>
-      {% endfor %}
-    </ul>
   </div>
   <button class="respond-button" type="button">Respond</button>
   <!-- The respond to request section displayed on clicking respond button -->
   <div class="response-content" id="responseForm">
     <!-- The respond to request section has a field to enter response and submit and back buttons -->
     <form
-      action="{{ url_for('ViewRequest', request_id=request.request_id) }}"
-      method="post"
+    action="{{ url_for('ViewRequest', request_id=request.request_id) }}"
+    method="post"
     >
-      <textarea
-        placeholder="Enter your response here..."
-        id="response"
-        name="response"
-        required
-      ></textarea>
-      <div class="response-buttons">
-        <button class="submit-button" type="submit">Submit</button>
-        <button class="back-button" type="button" onclick="hideResponseForm()">
-          Back
-        </button>
-      </div>
-    </form>
-  </div>
+    <textarea
+    placeholder="Enter your response here..."
+    id="response"
+    name="response"
+    required
+    ></textarea>
+    <div class="response-buttons">
+      <button class="submit-button" type="submit">Submit</button>
+      <button class="back-button" type="button" onclick="hideResponseForm()">
+        Back
+      </button>
+    </div>
+  </form>
+</div>
+<h3>Responses:</h3>
+<ul>
+  {% for response in request.response %}
+  <li>
+    <div class="Responses">
+      <strong>User:</strong>{{response.contributor.user_name}}
+      <p>{{ response.response_content }}</p>
+    </div>
+    
+  </li>
+  {% endfor %}
+</ul>
 </div>
 
 {% endblock %}
