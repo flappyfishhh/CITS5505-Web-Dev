@@ -50,7 +50,7 @@ class Request(db.Model):
     
 class Response(db.Model):
     response_id = db.Column(db.Integer, primary_key = True)
-    response_content = db.Column(db.String(1000))
+    response_content = db.Column(db.String(1000), nullable=False)
     date_responded = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey(User.user_id), nullable=False)
     request_id = db.Column(db.Integer, db.ForeignKey(Request.request_id), nullable=False)
