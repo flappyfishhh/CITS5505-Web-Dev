@@ -76,3 +76,33 @@
     width:50px;
     margin-right: 10px;
 }
+.submit-button {
+    --antd-wave-shadow-color: #1890ff;
+    --scroll-bar: 0;
+    --fa-style-family-brands: "Font Awesome 6 Brands";
+    --fa-font-brands: normal 400 1em/1 "Font Awesome 6 Brands";
+    --fa-font-regular: normal 400 1em/1 "Font Awesome 6 Free";
+    --fa-style-family-classic: "Font Awesome 6 Free";
+    --fa-font-solid: normal 900 1em/1 "Font Awesome 6 Free";
+    --main-color: #c8cee6;
+    --elements-color: #4f2194;
+    --base: #685bbc;
+    --border: 1rem solid rgba(255, 255, 255, .3);
+    --hover-element: white;
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    margin: 0;
+    box-sizing: border-box;
+    outline: none;
+    text-decoration: none;
+    transition: .2s linear;
+    padding: 7px;
+    border-radius: 4px;
+    border: none;
+    text-align: center;
+    margin-top: 20px;
+    background-color: var(--elements-color);
+    color: white;
+    line-height: 1.1;
+    cursor: pointer;
+}

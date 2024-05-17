@@ -142,6 +142,20 @@ def update_user():
     db.session.commit()
     return redirect(url_for('myProfile'))
 
+# change user password
+@app.route('/update_password',methods=['POST'])
+def update_password():
+    password_old = request.form['password_old']
+    password_new = request.form['password_new']
+    # verify password
+    user = User.query.get(current_user.user_id)
+    if user is None or not user.check_password(password_old):
+        flash('Invalid username or password')
+        return redirect(url_for('myProfile'))
+    user.set_password(password_new)
+    db.session.commit()
+    return redirect(url_for('myProfile'))
+
 # delete request
 @app.route('/delete_post/<int:post_id>', methods=['POST'])
 def delete_post(post_id):
