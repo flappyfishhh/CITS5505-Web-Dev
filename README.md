@@ -2,7 +2,6 @@
 
 CITS5505 Group Project
 
-## Project Purpose
 
 # Community Board Web Application
 
