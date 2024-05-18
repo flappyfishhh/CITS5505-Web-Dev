@@ -1,4 +1,5 @@
 {% extends "base.html" %} {% block content %}
+<!-- Display requests for the search result-->
 <link
   rel="stylesheet"
   href="{{ url_for('static', filename='styling-css/home-page.css') }}"
@@ -10,7 +11,8 @@
     <div class="post">
       <h2>{{ result.author.user_name }}</h2>
       <a href="{{ url_for('ViewRequest', request_id=result.request_id) }}"
-        >{{ result.request_title }}</a>
+        >{{ result.request_title }}</a
+      >
       <p>{{ result.request_content }}</p>
     </div>
     <hr />

@@ -4,7 +4,6 @@ from app.model import User,Tag,Request,Response
 from app.forms import LoginForm, RegistrationForm,CreateRequestForm
 from flask_login import current_user, login_user, logout_user
 import sqlalchemy as sa
-from urllib.parse import urlsplit
 import os
 
 

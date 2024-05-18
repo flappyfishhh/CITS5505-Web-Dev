@@ -1,3 +1,4 @@
+# database model for the app
 from datetime import datetime
 from flask_login import UserMixin
 from app import db
@@ -9,6 +10,7 @@ from app import login
 def load_user(id):
     return db.session.get(User, str(id))
 
+# user model
 class User(db.Model, UserMixin):
     user_id = db.Column(db.Integer, primary_key = True)
     user_name = db.Column(db.String(100), nullable=False)
@@ -31,10 +33,12 @@ class User(db.Model, UserMixin):
     def get_id(self):
         return self.user_id
 
+# tag model
 class Tag(db.Model):
     tag_id = db.Column(db.Integer, primary_key = True)
     tag_name = db.Column(db.String(30), nullable=False)
 
+# request model
 class Request(db.Model):
     request_id = db.Column(db.Integer, primary_key = True)
     request_title = db.Column(db.String(100), nullable=False)
@@ -47,7 +51,8 @@ class Request(db.Model):
     #print the request detail
     def __repr__(self) -> str:
         return f'User {self.request_id},{self.date_posted}'
-    
+
+# response model
 class Response(db.Model):
     response_id = db.Column(db.Integer, primary_key = True)
     response_content = db.Column(db.String(1000), nullable=False)

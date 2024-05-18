@@ -1,53 +1,55 @@
 {% block content %}
+<!-- register page allowing user register by email, username, and password -->
 <link
   rel="stylesheet"
   href="{{ url_for('static', filename='styling-css/common-elements-style.css') }}"
 />
-<link rel="stylesheet" href="{{ url_for('static', filename='styling-css/loginAndRegister.css') }}">
-    <div class="login-container">
-        <h2>Register</h2>
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <ul>
-            {% for message in messages %}
-            <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-        {% endwith %}
-        <form class="login-form" method="post" action="/register">
-            {{ form.hidden_tag() }}
-            <p>
-                {{ form.username.label }}<br>
-                {{ form.username }}<br>
-                {% for error in form.username.errors %}
-                <span>{{ error }}</span>
-                {% endfor %}
-            </p>
-            <p>
-                {{ form.email.label }}<br>
-                {{ form.email }}<br>
-                {% for error in form.email.errors %}
-                <span> {{ error }} </span>
-                {% endfor %}
-            </p>
-            <p>
-                {{ form.password.label }}<br>
-                {{ form.password }}<br>
-                {% for error in form.password.errors %}
-                <span>{{ error }}</span>
-                {% endfor %}
-            </p>
-            <p>
-                {{ form.password2.label }}<br>
-                {{ form.password2 }}<br>
-                {% for error in form.password2.errors %}
-                <span>{{ error }}</span>
-                {% endfor %}
-            </p>
-            <p>{{ form.submit() }}</p>
-        </form>
-        <a class="login-link" href="./login">Already have an account? login!</a>
-    </div>
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='styling-css/loginAndRegister.css') }}"
+/>
+<div class="login-container">
+  <h2>Register</h2>
+  {% with messages = get_flashed_messages() %} {% if messages %}
+  <ul>
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %} {% endwith %}
+  <form class="login-form" method="post" action="/register">
+    {{ form.hidden_tag() }}
+    <p>
+      {{ form.username.label }}<br />
+      {{ form.username }}<br />
+      {% for error in form.username.errors %}
+      <span>{{ error }}</span>
+      {% endfor %}
+    </p>
+    <p>
+      {{ form.email.label }}<br />
+      {{ form.email }}<br />
+      {% for error in form.email.errors %}
+      <span> {{ error }} </span>
+      {% endfor %}
+    </p>
+    <p>
+      {{ form.password.label }}<br />
+      {{ form.password }}<br />
+      {% for error in form.password.errors %}
+      <span>{{ error }}</span>
+      {% endfor %}
+    </p>
+    <p>
+      {{ form.password2.label }}<br />
+      {{ form.password2 }}<br />
+      {% for error in form.password2.errors %}
+      <span>{{ error }}</span>
+      {% endfor %}
+    </p>
+    <p>{{ form.submit() }}</p>
+  </form>
+  <a class="login-link" href="./login">Already have an account? login!</a>
+</div>
 
 {% endblock %}
