@@ -1,4 +1,5 @@
 {% extends "base.html" %} {% block content %}
+<!-- A "create requests" view, allowing the user to create requests for other people to answer. -->
 <!-- Link to stylesheet -->
 <link
   rel="stylesheet"
@@ -13,34 +14,32 @@
   <div class="container">
     <h1>Create a Post</h1>
     <!-- anfter the submit button is clicked, a POST request to the "/submit" URL with the form data -->
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
+    {% with messages = get_flashed_messages() %} {% if messages %}
     <ul>
       {% for message in messages %}
       <li>{{ message }}</li>
       {% endfor %}
     </ul>
-    {% endif %}
-    {% endwith %}
+    {% endif %} {% endwith %}
     <form id="postForm" action="/create-request" method="post">
       {{ form.hidden_tag() }}
       <p>
-        {{ form.request_title.label }}<br>
-        {{ form.request_title }}<br>
+        {{ form.request_title.label }}<br />
+        {{ form.request_title }}<br />
         {% for error in form.request_title.errors %}
         <span>{{ error }}</span>
         {% endfor %}
       </p>
       <p>
-        {{ form.request_content.label }}<br>
-        {{ form.request_content}}<br>
+        {{ form.request_content.label }}<br />
+        {{ form.request_content}}<br />
         {% for error in form.request_content.errors %}
         <span>{{ error }}</span>
         {% endfor %}
       </p>
       <p>
-        {{ form.tags.label }}<br>
-        {{ form.tags}}<br>
+        {{ form.tags.label }}<br />
+        {{ form.tags}}<br />
         {% for error in form.tags.errors %}
         <span>{{ error }}</span>
         {% endfor %}
@@ -49,7 +48,5 @@
     </form>
   </div>
 </div>
-<!-- Link to js sheet -->
-<script src="{{ url_for('static', filename='create-request.js')}}"></script>
 
 {% endblock %}
