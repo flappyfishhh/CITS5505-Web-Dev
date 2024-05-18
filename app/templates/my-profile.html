@@ -1,9 +1,6 @@
 {% extends "base.html" %} {% block content %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename='styling-css/my-profile.css') }}"
-/>
+<link rel="stylesheet" href="{{ url_for('static', filename='styling-css/my-profile.css') }}" />
 <script src="{{ url_for('static', filename='my-profile.js') }}"></script>
 <div class="profile-container">
   <h1>My Profile</h1>
@@ -12,14 +9,12 @@
     <div class="existing-data">
       <h2>Current Profile Picture</h2>
       <img src="{{user_image}}" alt="User Avatar" />
-    </div> 
+    </div>
     <!-- upload account image -->
-    <form
-      action="{{ url_for('upload_avatar') }}"
-      method="post"
-      enctype="multipart/form-data">
-      <input type="file" name="file" />
-      <input type="submit" value="Upload" />
+    <form action="{{ url_for('upload_avatar') }}" method="post" enctype="multipart/form-data">
+      <input type="file" id="avatar_file" name="file" />
+      <a href="javascript:;" id="avatar_file_show">Upload a JPG</a>
+      <input type="submit" class="submit-button" value="Upload" />
     </form>
   </div>
   <!-- allow user to change user name -->
@@ -28,33 +23,45 @@
     <p>Name: {{ user.user_name }}</p>
     <form action="{{ url_for('update_user') }}" method="post">
       <label for="username">Change User Name:</label>
-      <input
-        type="text"
-        id="username"
-        name="username"
-        value="{{ user.user_name }}"
-        required
-      />
-      <button type="submit">Change</button>
+      <input type="text" id="username" name="username" value="{{ user.user_name }}" required />
+      <button class="submit-button" type="submit">Change</button>
     </form>
     <p>Email: {{ user.email }}</p>
   </div>
+  <button type="button" class="collapsible">Change My Password >></button>
+  <div class="content">
+    <h2>Change Password</h2>
+
+    <form action="{{ url_for('update_password') }}" method="post" enctype="multipart/form-data">
+      <div class="changePassword_msg">
+      </div>
+      <div class="CPass_input">
+        <label for="username">Current Password:</label>
+        <input type="password" id="password_old" name="password_old" value="" required />
+      </div>
+      <div class="CPass_input">
+        <label for="username">New Password:</label>
+        <input type="password" id="password_new" name="password_new" value="" required />
+      </div>
+      <div class="CPass_input">
+        <label for="username">Repeat Password:</label>
+        <input type="password" id="password_new_repeat" name="password_new_repeat" value="" required />
+        <button class="submit-button" id="changeButton" type="submit">Change</button>
+      </div>
+  </div>
   <button type="button" class="collapsible">View My Posts >></button>
+  </form>
   <div class="content">
     <h2>My Posts</h2>
     <ul>
       {% for post in posts %}
       <li>
-        <a href="{{ url_for('ViewRequest', request_id=post.request_id) }}"
-          >{{ post.request_title }}
+        <a href="{{ url_for('ViewRequest', request_id=post.request_id) }}">{{ post.request_title }}
         </a>
         - {{ post.date_posted }}
       </li>
-      <form
-        action="{{ url_for('delete_post', post_id=post.request_id) }}"
-        method="post"
-      >
-        <button type="submit">Delete</button>
+      <form action="{{ url_for('delete_post', post_id=post.request_id) }}" method="post">
+        <button class="submit-button" type="submit">Delete</button>
       </form>
       {% endfor %}
     </ul>
@@ -63,25 +70,21 @@
   <div class="content">
     <h2>My Responses</h2>
     <ul>
-    {% for response in responses %}
-    <li>
-      <p>{{ response.response_content }} - {{ response.date_responded }}</p>
-      <p>
-        For the request:
-        <a
-          href="{{ url_for('ViewRequest', request_id=response.response.request_id) }}"
-          >{{ response.response.request_title }}
-        </a>
-      </p>
-      <form
-        action="{{ url_for('delete_response', response_id=response.response_id) }}"
-        method="post"
-      >
-        <button type="submit">Delete</button>
-      </form>
-    </li>
-    {% endfor %}
-  </ul>
+      {% for response in responses %}
+      <li>
+        <p>{{ response.response_content }} - {{ response.date_responded }}</p>
+        <p>
+          For the request:
+          <a href="{{ url_for('ViewRequest', request_id=response.response.request_id) }}">{{
+            response.response.request_title }}
+          </a>
+        </p>
+        <form action="{{ url_for('delete_response', response_id=response.response_id) }}" method="post">
+          <button class="submit-button" type="submit">Delete</button>
+        </form>
+      </li>
+      {% endfor %}
+    </ul>
   </div>
 </div>
 {% endblock %}

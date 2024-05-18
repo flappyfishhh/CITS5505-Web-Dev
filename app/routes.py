@@ -1,4 +1,4 @@
-from flask import render_template, redirect,url_for, session, flash, request
+from flask import render_template, redirect,url_for, session, flash, request,jsonify
 from app import app,db
 from app.model import User,Tag,Request,Response
 from app.forms import LoginForm, RegistrationForm,CreateRequestForm
@@ -142,6 +142,19 @@ def update_user():
     db.session.commit()
     return redirect(url_for('myProfile'))
 
+# change user password
+@app.route('/update_password',methods=['POST'])
+def update_password():
+    password_old = request.json['password_old']
+    password_new = request.json['password_new']
+    # verify password
+    user = User.query.get(current_user.user_id)
+    if user is None or not user.check_password(password_old):
+        return jsonify(code=1,msg="wrong password!")
+    user.set_password(password_new)
+    db.session.commit()
+    return jsonify(code=0,msg="Password reset complete")
+
 # delete request
 @app.route('/delete_post/<int:post_id>', methods=['POST'])
 def delete_post(post_id):
@@ -157,7 +170,7 @@ def delete_post(post_id):
 
 # delete response 
 @app.route('/delete_response/<int:response_id>', methods=['POST'])
-def delete_response(response_id):
+def delete_response(response_id):   
     response = Response.query.get_or_404(response_id)
     if response.contributor.user_id == current_user.user_id:
         db.session.delete(response)

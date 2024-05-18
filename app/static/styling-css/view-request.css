@@ -26,7 +26,19 @@
 }
 
 /* Styling for all the buttons on view request and respond request pages */
-.respond-button,
+.respond-button{
+    padding:7px;
+    background-color: var(--base);
+    color: var(--main-color);
+    margin-top: 15px;
+    margin-bottom: 50px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: none;
+    text-align: center;
+}
+
+
 .submit-button,
 .back-button{
     padding:7px;
@@ -75,4 +87,71 @@
     height: 50px;
     width:50px;
     margin-right: 10px;
+}
+.submit-button {
+    --antd-wave-shadow-color: #1890ff;
+    --scroll-bar: 0;
+    --fa-style-family-brands: "Font Awesome 6 Brands";
+    --fa-font-brands: normal 400 1em/1 "Font Awesome 6 Brands";
+    --fa-font-regular: normal 400 1em/1 "Font Awesome 6 Free";
+    --fa-style-family-classic: "Font Awesome 6 Free";
+    --fa-font-solid: normal 900 1em/1 "Font Awesome 6 Free";
+    --main-color: #c8cee6;
+    --elements-color: #4f2194;
+    --base: #685bbc;
+    --border: 1rem solid rgba(255, 255, 255, .3);
+    --hover-element: white;
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    margin: 0;
+    box-sizing: border-box;
+    outline: none;
+    text-decoration: none;
+    transition: .2s linear;
+    padding: 7px;
+    border-radius: 4px;
+    border: none;
+    text-align: center;
+    margin-top: 20px;
+    background-color: var(--elements-color);
+    color: white;
+    line-height: 1.1;
+    cursor: pointer;
+}
+
+#Problem_Description {
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border: 1px;
+}
+
+.Responses {
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border: 1px;
+    margin-top: 5px;
+}
+.Responses > p {
+    margin-top: 10px;
+    border-top: 2px solid #685BBC;
+    padding-top: 5px;
+}
+
+
+ul {
+    list-style: none;
+}
+
+.tag-link {
+    text-decoration: none;
+    color: #25507B;
+    background-color: #EDF5FD;
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 4px;
+}
+.author-details {
+    border-bottom: 5px solid #685BBC;
 }
