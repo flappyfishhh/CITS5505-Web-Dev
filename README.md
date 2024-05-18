@@ -66,8 +66,9 @@ This web application is designed for a community board purpose, but it is versat
 ## Design
 
 - **Backend**: Implemented with Flask, managing routing, and handling database operations.
-- **Frontend**: Designed with HTML, CSS, and JavaScript for dynamic interactions.
-- **Database**: Uses SQLAlchemy for database interactions, supporting user authentication, request creation, tagging, and responses.
+- **Frontend**: Designed with HTML, CSS, JQuery, and AJAX for dynamic interactions.
+- **Database**: Uses SQLite for database interactions, supporting user authentication, request creation, tagging, and responses.
+- **Websockets**: Used for real-time updates and dynamic interactions.
 
 ## Team Information
 
