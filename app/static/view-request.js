@@ -31,7 +31,7 @@ $(document).ready(function () {
   $(document).ready(function () {
     $(".tag-link").click(function (event) {
       event.preventDefault();
-      var tag = $(this).html().substring(1); // Remove the '#' from the tag name
+      var tag = $(this).html();
       fetch("/tag_requests/" + tag)
         .then((response) => response.text())
         .then((data) => {
@@ -45,4 +45,3 @@ $(document).ready(function () {
     });
   });
 });
-
