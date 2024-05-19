@@ -52,7 +52,7 @@
   <div class="response-content" id="responseForm">
     <!-- The respond to request section has a field to enter response and submit and back buttons -->
     <form
-      action="{{ url_for('ViewRequest', request_id=request.request_id) }}"
+      action="{{ url_for('main.ViewRequest', request_id=request.request_id) }}"
       method="post"
     >
       <textarea

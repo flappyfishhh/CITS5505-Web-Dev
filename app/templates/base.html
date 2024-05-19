@@ -9,6 +9,8 @@
     {% else %}
     <title>Local Community Board</title>
     {% endif %}
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static',
+    filename='images/AppLogo.jpg') }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link
       rel="stylesheet"
@@ -47,10 +49,10 @@
         </div>
         <div class="user-button">
           <button class="profile-buttons" type="button">
-            <a href="{{ url_for('myProfile') }}">My profile</a>
+            <a href="{{ url_for('main.myProfile') }}">My profile</a>
           </button>
           <button class="profile-buttons" type="button">
-            <a href="{{ url_for('Logout') }}">Log out</a>
+            <a href="{{ url_for('main.Logout') }}">Log out</a>
           </button>
         </div>
       </nav>
@@ -63,8 +65,8 @@
 
     <!-- Side navigation bar to navigate to different pages such as Create Request, View Request and Home page -->
     <div class="sidebar">
-      <a href="{{ url_for('index') }}" class="active">Home</a>
-      <a href="{{ url_for('CreateRequest') }}">Create Request</a>
+      <a href="{{ url_for('main.index') }}" class="active">Home</a>
+      <a href="{{ url_for('main.CreateRequest') }}">Create Request</a>
     </div>
     {% block content %}{% endblock %}
   </body>

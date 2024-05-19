@@ -12,7 +12,7 @@
 <!-- The create request page allow user to create post content detail including the title, content and tags -->
 <div class="home-page">
   <div class="container">
-    <h1>Create a Post</h1>
+    <h1 id="create-request-page">Create a Post</h1>
     <!-- anfter the submit button is clicked, a POST request to the "/submit" URL with the form data -->
     {% with messages = get_flashed_messages() %} {% if messages %}
     <ul>

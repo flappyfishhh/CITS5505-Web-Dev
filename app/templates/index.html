@@ -6,7 +6,7 @@
   href="{{ url_for('static', filename='styling-css/home-page.css') }}"
 />
 <div class="home-page">
-  <form action="{{ url_for('search') }}" method="GET" class="search-posts">
+  <form action="{{ url_for('main.search') }}" method="GET" class="search-posts">
     <div class="top-options">
       <div>
         <label for="search">
@@ -28,7 +28,7 @@
         <div><h2>{{ post.author.user_name }}</h2></div>
       </div>
       <p>{{ post.request_title }}</p>
-      <p class="view-request-link"><a href="{{ url_for('ViewRequest', request_id=post.request_id) }}">View Full Request >></a></p>
+      <p class="view-request-link"><a href="{{ url_for('main.ViewRequest', request_id=post.request_id) }}">View Full Request >></a></p>
     </div>
     <hr />
     
