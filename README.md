@@ -137,3 +137,30 @@ This web application is designed for a community board purpose, but it is versat
    http://127.0.0.1:5000
 
 ## Test
+1. Unit Testing
+   There are 5 unit testcases in unit.py file for scenarios: delete_request, delete_response,create reqest and response and password hasing.
+
+2. System Testing
+   The selenium.py file has 3 system testcases verifying the login success, login error and registeration functionality.
+
+Instructions to run testcases:
+1. Update to latest chrome version:
+   ```
+      sudo apt-get install -y google-chrome-stable
+   ```
+
+2. Requirements.txt file has all requirements related to selenium.
+   ```
+      pip install -r requirements.txt 
+   ```
+  
+3. Run unit tests.
+   ```
+      python -m unittest tests/unit.py
+   ```
+
+4. Run selenium tests.
+   ```
+   python -m unittest tests/selenium.py
+   ```
+
