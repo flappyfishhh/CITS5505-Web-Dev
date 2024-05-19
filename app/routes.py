@@ -1,10 +1,25 @@
-from flask import render_template, redirect,url_for, session, flash, request, jsonify
+# Flask packages for rendering templates, handling redirects, managing sessions, flashing messages, handling requests, and returning JSON responses
+from flask import render_template, redirect, url_for, session, flash, request, jsonify
+
+# Importing the main blueprint for routing
 from app.blueprints import main
+
+# Importing the database instance and app creation function
 from app import db, create_app
-from app.model import User,Tag,Request,Response
-from app.forms import LoginForm, RegistrationForm,CreateRequestForm
+
+# Importing models for database interaction
+from app.model import User, Tag, Request, Response
+
+# Importing wtforms for user input handling
+from app.forms import LoginForm, RegistrationForm, CreateRequestForm
+
+# Flask-Login packages for user session management
 from flask_login import current_user, login_user, logout_user, login_required
+
+# SQLAlchemy package for database interactions
 import sqlalchemy as sa
+
+# OS package for interacting with the operating system
 import os
 
 
