@@ -34,12 +34,6 @@
       <p class="description-content">{{request.request_content}}</p>
     </div>
     <br />
-    <!-- <p><strong>Tags:</strong></p>
-    {% for tag in request.tags %}
-    <ul>
-      <li>#{{ tag.tag_name }}</li>
-    </ul>
-    {% endfor %} -->
     <p>
       Tags: {% for tag in request.tags %}
       <a href="#" class="tag-link" data-tag="{{ tag }}">{{ tag.tag_name }}</a>
