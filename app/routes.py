@@ -13,7 +13,7 @@ import os
 @main.route('/login', methods=['GET','POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('index'))
+        return redirect(url_for('main.index'))
     form = LoginForm()
     if form.validate_on_submit():
         user = db.session.scalar(
@@ -104,7 +104,7 @@ def CreateRequest():
             db.session.commit()
             return redirect(url_for('main.ViewRequest',request_id=new_request.request_id))
         return render_template('create-request.html',form=form)
-    return redirect(url_for('login'))
+    return redirect(url_for('main.login'))
     
 
 
