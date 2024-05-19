@@ -13,6 +13,7 @@ from app.config import TestConfig
 
 class SeleniumTestCase(TestCase):
 
+    # Testing running up the app
     def setUp(self):
         self.testApp = create_app(TestConfig)
         self.app_context = self.testApp.app_context()
@@ -41,7 +42,7 @@ class SeleniumTestCase(TestCase):
         self.server_process.terminate()
         self.driver.quit()
 
-
+    # Testing log in function with error
     def test_login_error(self):
         self.driver.get('http://localhost:5002/login')
         time.sleep(5)
@@ -56,6 +57,7 @@ class SeleniumTestCase(TestCase):
         message = self.driver.find_element(By.ID, "error-message").text
         self.assertEqual(message, "Invalid username or password")
 
+    # Testing register function
     def test_register_page(self):
         self.driver.get('http://localhost:5002/register')
 
@@ -82,6 +84,7 @@ class SeleniumTestCase(TestCase):
 
         self.assertNotIn('error', self.driver.current_url.lower())
 
+    # Testing log in page
     def test_login_page(self):
         self.driver.get('http://localhost:5002/login')
 
