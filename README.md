@@ -74,10 +74,10 @@ This web application is designed for a community board purpose, but it is versat
 
 | UWA ID   | Name            | Github User Name             |
 | -------- | --------------- | ---------------------------- |
-| 23927347 | Nanxi Rao       | flappyfishhh                 |
-| 23740033 | Zhengyuan Zhang | ivyhzyb Ivy(Zhengyuan) Zhang |
-| 23829237 | Ankita Narvekar | 23829237                     |
-| 24112813 | Shuyu Xie       | shuyux                       |
+| 2******7 | Nancy Rao       | flappyfishhh                 |
+| 2******3 | Zhengyuan Zhang | ivyhzyb Ivy(Zhengyuan) Zhang |
+| 2******7 | Ankita Narvekar | 23829237                     |
+| 2******3 | Shuyu Xie       | shuyux                       |
 
 ## Instruction to launch the app
 
