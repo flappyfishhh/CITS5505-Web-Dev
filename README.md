@@ -1,8 +1,3 @@
-# CITS5505
-
-CITS5505 Group Project
-
-
 # Community Board Web Application
 
 This web application is designed for a community board purpose, but it is versatile enough to be used for various purposes. Its primary functions are listed below:
